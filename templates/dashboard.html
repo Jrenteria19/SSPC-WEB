@@ -1,0 +1,1769 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control SSPC | Mazatlán RP</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Security Check -->
+    <script>
+        const session = JSON.parse(localStorage.getItem('sspc_session'));
+        if (!session || !session.isVerified) {
+            window.location.href = 'index.html';
+        }
+    </script>
+
+    <div class="mexico-bar">
+        <div class="bar-green"></div>
+        <div class="bar-white"></div>
+        <div class="bar-red"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar scrolled" id="main-navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="https://images.seeklogo.com/logo-png/62/1/secretaria-de-seguridad-y-proteccion-ciudadana-logo-png_seeklogo-626112.png"
+                    alt="Logo SSPC Sinaloa">
+            </a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="normativa.html">Normativa</a></li>
+                <li><a href="manual.html">Manual SSPC</a></li>
+                <li><a href="codigo-penal.html">Código Penal</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="btn-ingresar" id="btn-login">Ingresar</button>
+                <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+    <div class="mobile-menu" id="mobile-menu">
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="normativa.html">Normativa</a></li>
+            <li><a href="manual.html">Manual SSPC</a></li>
+            <li><a href="codigo-penal.html">Código Penal</a></li>
+            <li><a href="#" class="mobile-login">Ingresar</a></li>
+        </ul>
+    </div>
+
+    <main class="dash-main">
+        <div class="dash-bg"></div>
+
+        <div class="dashboard-wrapper">
+            <!-- Sidebar Lateral -->
+            <aside class="sidebar-dash">
+                <div class="sidebar-content">
+                    <div class="sidebar-tag">MENÚ OPERATIVO</div>
+                    <nav class="sidebar-nav">
+                        <a href="#" class="side-link" onclick="openModal('modal-ausencia')">
+                            <span class="s-icon">📅</span> Ausencias
+                        </a>
+                        <a href="#" class="side-link" onclick="openModal('modal-arresto')">
+                            <span class="s-icon">📄</span> Fichas de Arresto
+                        </a>
+                        <a href="#" class="side-link" onclick="openModal('modal-multa')">
+                            <span class="s-icon">📝</span> Fichas de Multa
+                        </a>
+                        <a href="#" class="side-link" onclick="openModal('modal-busqueda')">
+                            <span class="s-icon">🔍</span> Base de Datos
+                        </a>
+                        <a href="#" class="side-link">
+                            <span class="s-icon">🛡️</span> Equipamiento
+                        </a>
+
+                        <div id="menu-altos-mandos" style="display: none;">
+                            <hr class="side-divider">
+                            <div class="sidebar-tag" style="margin-top: 15px;">ALTOS MANDOS</div>
+
+                            <a href="#" class="side-link" onclick="openModalVerAusencias()">
+                                <span class="s-icon">👁️</span> Ver Ausencias
+                            </a>
+                            <a href="#" class="side-link" onclick="openModalPlacas()">
+                                <span class="s-icon">🆔</span> Placas
+                            </a>
+                            <a href="#" class="side-link">
+                                <span class="s-icon">🎖️</span> Rangos
+                            </a>
+                            <a href="#" class="side-link" onclick="openModalActividad()">
+                                <span class="s-icon">📊</span> Actividad
+                            </a>
+                            <a href="#" class="side-link" onclick="openModal('modal-anuncio')">
+                                <span class="s-icon">📢</span> Anuncio Institucional
+                            </a>
+                        </div>
+                    </nav>
+                </div>
+            </aside>
+
+            <!-- Modal de Ausencias -->
+            <div id="modal-ausencia" class="modal">
+                <div class="modal-content reveal">
+                    <div class="modal-header">
+                        <h2>Solicitud de Ausencia</h2>
+                        <button class="close-btn" onclick="closeModal('modal-ausencia')">&times;</button>
+                    </div>
+
+                    <div class="alert-warning">
+                        <strong>⚠️ PROTOCOLO DE AUSENCIA:</strong>
+                        <p>Solo puedes tener 3 ausencias a la semana. Si acumulas 3 semanas seguidas sin actividad,
+                            serás depuesto.</p>
+                        <p style="color: #ff6b6b; font-weight: 800;">🚫 PROHIBIDO HACER ROLEPLAY DURANTE LA AUSENCIA.
+                        </p>
+                        <p class="tip">Un mando revisará tu solicitud en el panel y recibirás un mensaje directo (DM) con la resolución.</p>
+                    </div>
+
+                    <form id="form-ausencia" onsubmit="submitAusencia(event)">
+                        <div class="form-group">
+                            <label>Razón de la Ausencia</label>
+                            <textarea id="aus-razon" placeholder="Describe el motivo de tu ausencia..."
+                                required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Número de días</label>
+                            <input type="number" id="aus-dias" min="1" max="7" placeholder="Ej: 3" required>
+                        </div>
+                        <button type="submit" class="btn-submit">Enviar Solicitud</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal de Actividad (Altos Mandos) -->
+            <div id="modal-actividad" class="modal">
+                <div class="modal-content reveal" style="max-width: 900px;">
+                    <div class="modal-header">
+                        <h2>Panel de Actividad y Tiempos</h2>
+                        <button class="close-btn" onclick="closeModal('modal-actividad')">&times;</button>
+                    </div>
+
+                    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                        <button onclick="reiniciarSemana()"
+                            style="background: #ff4757; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: bold;">⚠️
+                            Finalizar Semana (Resetear Tiempos a Cero)</button>
+                        <button onclick="loadActividad()"
+                            style="background: #3498db; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: bold;">🔄
+                            Refrescar Tabla</button>
+                    </div>
+
+                    <table style="width: 100%; border-collapse: collapse; color: white; text-align: left;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--gold);">
+                                <th style="padding: 10px;">Oficial</th>
+                                <th style="padding: 10px;">Placa</th>
+                                <th style="padding: 10px;">Estado</th>
+                                <th style="padding: 10px;">Tiempo Semanal</th>
+                                <th style="padding: 10px;">Advertencias</th>
+                                <th style="padding: 10px;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista-actividad">
+                            <tr>
+                                <td colspan="6" style="text-align: center; padding: 20px;">Cargando...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Modal de Anuncio Institucional (Altos Mandos) -->
+            <div id="modal-anuncio" class="modal">
+                <div class="modal-content reveal">
+                    <div class="modal-header">
+                        <h2>Publicar Anuncio Institucional</h2>
+                        <button class="close-btn" onclick="closeModal('modal-anuncio')">&times;</button>
+                    </div>
+
+                    <form id="form-anuncio" onsubmit="submitAnuncio(event)">
+                        <div class="form-group">
+                            <label>Título del Anuncio</label>
+                            <input type="text" id="anu-titulo" placeholder="Ej: Nueva Normativa de Uso de Fuerza" required minlength="5">
+                        </div>
+                        <div class="form-group">
+                            <label>Contenido del Anuncio</label>
+                            <textarea id="anu-contenido" placeholder="Escribe de manera clara y detallada..." required minlength="15" style="min-height: 120px;"></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit" style="background: var(--gold); color: black;">Publicar a Todos los Oficiales</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal de Gestión de Ausencias (Altos Mandos) -->
+            <div id="modal-ver-ausencias" class="modal">
+                <div class="modal-content reveal" style="max-width: 800px;">
+                    <div class="modal-header">
+                        <h2>Gestión de Ausencias (Altos Mandos)</h2>
+                        <button class="close-btn" onclick="closeModal('modal-ver-ausencias')">&times;</button>
+                    </div>
+
+                    <div id="lista-ver-ausencias"
+                        style="max-height: 500px; overflow-y: auto; margin-top: 15px; display: flex; flex-direction: column; gap: 15px;">
+                        <p style="text-align: center; color: var(--gold);">Cargando ausencias...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal de Arresto -->
+            <div id="modal-arresto" class="modal">
+                <div class="modal-content reveal">
+                    <div class="modal-header">
+                        <h2>Ficha de Arresto</h2>
+                        <button class="close-btn" onclick="closeModal('modal-arresto')">&times;</button>
+                    </div>
+
+                    <form id="form-arresto" onsubmit="submitArresto(event)">
+                        <div style="display: flex; gap: 15px;">
+                            <div class="form-group" style="flex: 1;">
+                                <label>Nombre Roblox (Detenido)</label>
+                                <input type="text" id="arr-roblox" placeholder="Usuario" required>
+                            </div>
+                            <div class="form-group" style="flex: 1;">
+                                <label>Nombre Discord (Detenido)</label>
+                                <input type="text" id="arr-discord" placeholder="Ej: user#0000" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Razón / Código Penal</label>
+                            <input type="text" id="arr-razon" list="lista-penal" placeholder="Buscar delito..."
+                                required>
+                            <datalist id="lista-penal">
+                                <option value="Art. 10: Alteración del orden público">
+                                <option value="Art. 11: Resistencia a la autoridad">
+                                <option value="Art. 12: Fuga policial">
+                                <option value="Art. 20: Portación ilegal de arma">
+                                <option value="Art. 21: Uso indebido de arma de fuego">
+                                <option value="Art. 22: Disparos injustificados">
+                                <option value="Art. 30: Exceso de velocidad">
+                                <option value="Art. 31: Conducción temeraria">
+                                <option value="Art. 32: Atropellamiento imprudencial">
+                                <option value="Art. 33: Conducir sin licencia">
+                                <option value="Art. 40: Amenazas">
+                                <option value="Art. 41: Lesiones leves">
+                                <option value="Art. 42: Lesiones graves">
+                                <option value="Art. 43: Homicidio">
+                                <option value="Art. 50: Robo menor">
+                                <option value="Art. 51: Robo a comercio">
+                                <option value="Art. 52: Robo de vehículo">
+                                <option value="Art. 53: Daños a propiedad privada">
+                                <option value="Art. 60: Posesión de drogas">
+                                <option value="Art. 61: Venta de drogas">
+                                <option value="Art. 62: Narcotráfico">
+                                <option value="Art. 70: Suplantación de autoridad">
+                                <option value="Art. 71: Corrupción">
+                                <option value="Art. 72: Obstrucción de justicia">
+                            </datalist>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Monto de Multa ($)</label>
+                            <input type="number" id="arr-multa" placeholder="Ej: 5000" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Anotaciones (Vehículo, Armas...)</label>
+                            <textarea id="arr-notas" placeholder="Ej: Se retiró vehículo, licencia revocada..."
+                                required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Evidencia (Link de Imagen)</label>
+                            <input type="url" id="arr-link" placeholder="https://..." required>
+                        </div>
+
+                        <button type="submit" class="btn-submit">Publicar Ficha</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal de Multa -->
+            <div id="modal-multa" class="modal">
+                <div class="modal-content reveal">
+                    <div class="modal-header">
+                        <h2>Ficha de Multa</h2>
+                        <button class="close-btn" onclick="closeModal('modal-multa')">&times;</button>
+                    </div>
+
+                    <form id="form-multa" onsubmit="submitMulta(event)">
+                        <div style="display: flex; gap: 15px;">
+                            <div class="form-group" style="flex: 1;">
+                                <label>Usuario Roblox</label>
+                                <input type="text" id="mul-roblox" placeholder="Ej: Oficial_RP" required>
+                            </div>
+                            <div class="form-group" style="flex: 1;">
+                                <label>Usuario Discord</label>
+                                <input type="text" id="mul-discord" placeholder="Ej: user#0000" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Infracción (Código Penal)</label>
+                            <input type="text" id="mul-razon" list="lista-penal-full" placeholder="Buscar artículo..."
+                                required>
+                            <datalist id="lista-penal-full">
+                                <option value="Art. 10: Alteración del orden público">
+                                <option value="Art. 11: Resistencia a la autoridad">
+                                <option value="Art. 12: Fuga policial">
+                                <option value="Art. 20: Portación ilegal de arma">
+                                <option value="Art. 21: Uso indebido de arma de fuego">
+                                <option value="Art. 22: Disparos injustificados">
+                                <option value="Art. 30: Exceso de velocidad">
+                                <option value="Art. 31: Conducción temeraria">
+                                <option value="Art. 32: Atropellamiento imprudencial">
+                                <option value="Art. 33: Conducir sin licencia">
+                                <option value="Art. 40: Amenazas">
+                                <option value="Art. 41: Lesiones leves">
+                                <option value="Art. 42: Lesiones graves">
+                                <option value="Art. 43: Homicidio">
+                                <option value="Art. 50: Robo menor">
+                                <option value="Art. 51: Robo a comercio">
+                                <option value="Art. 52: Robo de vehículo">
+                                <option value="Art. 53: Daños a propiedad privada">
+                                <option value="Art. 60: Posesión de drogas">
+                                <option value="Art. 61: Venta de drogas">
+                                <option value="Art. 62: Narcotráfico">
+                                <option value="Art. 70: Suplantación de autoridad">
+                                <option value="Art. 71: Corrupción">
+                                <option value="Art. 72: Obstrucción de justicia">
+                            </datalist>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Monto de la Multa ($)</label>
+                            <input type="number" id="mul-monto" placeholder="Monto total" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Vehículo / Licencia / Anotaciones</label>
+                            <textarea id="mul-notas"
+                                placeholder="Ej: Vehículo (Modelo, Color, Placas). Licencia retirada."
+                                required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Evidencia (Link de Imagen)</label>
+                            <input type="url" id="mul-link" placeholder="Link de la imagen" required>
+                        </div>
+
+                        <button type="submit" class="btn-submit">Enviar Multa</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal de Búsqueda -->
+            <div id="modal-busqueda" class="modal">
+                <div class="modal-content reveal" style="max-width: 900px;">
+                    <div class="modal-header">
+                        <h2>Base de Datos SSPC</h2>
+                        <button class="close-btn" onclick="closeModal('modal-busqueda')">&times;</button>
+                    </div>
+
+                    <div class="search-panel">
+                        <div class="form-group">
+                            <input type="text" id="db-search-input"
+                                placeholder="Buscar por nombre de Roblox, Discord o Delito..."
+                                oninput="performSearch()">
+                        </div>
+                    </div>
+
+                    <div id="db-results" class="db-results-container">
+                        <!-- Aquí se cargarán los resultados de SQLite -->
+                        <p style="text-align: center; color: #888; padding: 20px;">Ingresa un nombre para buscar en la
+                            base de datos...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal de Placas (Altos Mandos) -->
+            <div id="modal-placas" class="modal">
+                <div class="modal-content reveal" style="max-width: 600px;">
+                    <div class="modal-header">
+                        <h2>Gestión de Placas Oficiales</h2>
+                        <button class="close-btn" onclick="closeModal('modal-placas')">&times;</button>
+                    </div>
+
+                    <form id="form-placas" onsubmit="asignarPlaca(event)">
+                        <div style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 15px;">
+                            <div style="display: flex; gap: 15px;">
+                                <div class="form-group" style="flex: 1;">
+                                    <label>Nombre de Discord</label>
+                                    <input type="text" id="placa-discord" placeholder="Ej: oficial#0000" required>
+                                </div>
+                                <div class="form-group" style="flex: 1;">
+                                    <label>Nombre de Roblox</label>
+                                    <input type="text" id="placa-roblox" placeholder="Ej: Jr_Smile12" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Número de Placa (SPC-)</label>
+                                <select id="placa-numero" required
+                                    style="width: 100%; padding: 12px; background: rgba(0, 0, 0, 0.5); border: 1px solid var(--glass-border); border-radius: 8px; color: var(--white); font-family: 'Inter', sans-serif;">
+                                    <option value="">Cargando disponibles...</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-submit">Asignar Placa</button>
+                    </form>
+
+                    <hr style="border:0; border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0;">
+                    <h3>Placas Asignadas</h3>
+                    <div id="lista-placas"
+                        style="max-height: 250px; overflow-y: auto; margin-top: 15px; display: flex; flex-direction: column; gap: 10px;">
+                        <p style="text-align: center; color: var(--gold);">Cargando placas...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenido Principal -->
+            <section class="dash-content">
+                <header class="dash-header reveal">
+                    <div class="profile-header">
+                        <div class="avatar-container">
+                            <img id="user-avatar" src="" alt="Avatar" class="dash-avatar">
+                            <div class="avatar-glow"></div>
+                        </div>
+                        <div class="user-info">
+                            <h1 id="user-name">Bienvenido</h1>
+                            <p class="server-tag">SSPC - MAZATLAN RP</p>
+                            <div class="officer-meta">
+                                <span class="badge-item">PLACA: <b id="user-badge">--</b></span>
+                                <span class="badge-item">RANGO: <b id="user-rank">OFICIAL</b></span>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Panel de Estado de Servicio -->
+                <div class="service-panel reveal">
+                    <h3>📡 Control de Servicio</h3>
+                    <div class="service-controls">
+                        <button id="btn-duty" class="btn-service duty" onclick="updateService('duty')">
+                            <span>🟢</span> Entrar en Servicio
+                        </button>
+                        <button id="btn-pause" class="btn-service pause disabled" onclick="updateService('pause')"
+                            disabled>
+                            <span>🟡</span> Pausar Servicio
+                        </button>
+                        <button id="btn-off" class="btn-service off disabled" onclick="updateService('off')" disabled>
+                            <span>🔴</span> Salir de Servicio
+                        </button>
+                    </div>
+                </div>
+
+                <div class="dash-grid-bottom">
+                    <!-- Panel de Anuncios -->
+                    <div class="dash-card announcement-panel reveal" style="grid-column: span 2;">
+                        <h3>📢 Anuncios Institucionales</h3>
+                        <div class="announcement-list" id="lista-anuncios-dashboard" style="max-height: 300px; overflow-y: auto;">
+                            <div class="ann-item">
+                                <p style="text-align: center; color: var(--gold);">Cargando anuncios...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <style>
+        .disabled {
+            opacity: 0.3;
+            cursor: not-allowed !important;
+            pointer-events: none;
+            filter: grayscale(1);
+        }
+
+        .side-divider {
+            border: 0;
+            border-top: 1px solid var(--glass-border);
+            margin: 15px 10px;
+        }
+
+        .server-tag {
+            color: var(--gold);
+            font-weight: 800;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            margin-top: 5px;
+        }
+
+        .officer-meta {
+            display: flex;
+            gap: 15px;
+            margin-top: 12px;
+        }
+
+        .badge-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            border: 1px solid var(--glass-border);
+            color: #ccc;
+        }
+
+        .badge-item b {
+            color: var(--white);
+            font-weight: 800;
+        }
+
+        .db-results-container {
+            max-height: 550px;
+            overflow-y: auto;
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 15px;
+            padding-right: 5px;
+        }
+
+        .citizen-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .citizen-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-3px);
+        }
+
+        .card-top {
+            display: flex;
+            gap: 15px;
+        }
+
+        .citizen-img-container {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--gold);
+            flex-shrink: 0;
+        }
+
+        .citizen-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .citizen-main {
+            flex: 1;
+        }
+
+        .citizen-header {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-bottom: 5px;
+        }
+
+        .citizen-name {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--gold);
+            text-transform: uppercase;
+            line-height: 1.1;
+        }
+
+        .stat-badges {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            font-size: 9px;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .badge-arrests {
+            background: #ff4757;
+            color: white;
+        }
+
+        .badge-fines {
+            background: #ffa502;
+            color: white;
+        }
+
+        .recent-box {
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .recent-box b {
+            color: var(--gold);
+        }
+
+        .btn-delete-exp {
+            background: rgba(255, 71, 87, 0.1);
+            color: #ff4757;
+            border: 1px solid #ff4757;
+            padding: 6px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            transition: 0.2s;
+            margin-top: auto;
+        }
+
+        .btn-delete-exp:hover {
+            background: #ff4757;
+            color: white;
+        }
+    </style>
+
+    <script src="/static/script.js"></script>
+    <script>
+        // Mapping de Rangos Oficiales (Jerarquía de SSPC - MAZATLAN RP)
+        const RANK_MAP = [
+            { id: '1496724468092113014', name: 'COMISARIO GENERAL' },
+            { id: '1496724468092113013', name: 'COMISARIO JEFE' },
+            { id: '1496724468092113012', name: 'COMISARIO' },
+            { id: '1496724468092113011', name: 'INSPECTOR GENERAL' },
+            { id: '1496724468092113010', name: 'INSPECTOR JEFE' },
+            { id: '1496724468092113009', name: 'INSPECTOR' },
+            { id: '1496724468092113008', name: 'SUBINSPECTOR' },
+            { id: '1496724468092113007', name: 'OFICIAL' },
+            { id: '1496724468092113006', name: 'SUBOFICIAL' },
+            { id: '1496724468033261710', name: 'POLICÍA PRIMERO' },
+            { id: '1496724468033261709', name: 'POLICÍA SEGUNDO' },
+            { id: '1496724468033261708', name: 'POLICÍA TERCERO' },
+            { id: '1496724468033261707', name: 'POLICÍA' },
+            { id: '1496724468033261706', name: 'POLICÍA' }
+        ];
+
+        // Load User Data
+        document.addEventListener('DOMContentLoaded', () => {
+            const session = JSON.parse(localStorage.getItem('sspc_session'));
+            if (session) {
+                const discrim = (session.discriminator && session.discriminator !== '0') ? `#${session.discriminator}` : '';
+                document.getElementById('user-name').textContent = `Bienvenido, ${session.username}${discrim}`;
+                document.getElementById('user-avatar').src = session.avatar;
+
+                // Detectar Rango más alto
+                let highestRank = 'SIN RANGO';
+                for (const rank of RANK_MAP) {
+                    if (session.roles && session.roles.includes(rank.id)) {
+                        highestRank = rank.name;
+                        break;
+                    }
+                }
+                document.getElementById('user-rank').textContent = highestRank;
+
+                // Buscar Placa Oficial en Supabase
+                document.getElementById('user-badge').textContent = "Buscando...";
+                const fullName = `${session.username}${discrim}`;
+
+                sspc_db.from('placas').select('placa_numero').ilike('discord', fullName).then(({ data, error }) => {
+                    if (!error && data && data.length > 0) {
+                        document.getElementById('user-badge').textContent = `SPC-${data[0].placa_numero}`;
+                    } else {
+                        document.getElementById('user-badge').textContent = "NO ASIGNADA";
+                    }
+                });
+
+                // Buscar Actividad Actual
+                sspc_db.from('actividad_oficiales').select('estado').eq('discord_name', session.username).single().then(({ data, error }) => {
+                    const estado = data ? data.estado : 'off';
+                    const btnDuty = document.getElementById('btn-duty');
+                    const btnPause = document.getElementById('btn-pause');
+                    const btnOff = document.getElementById('btn-off');
+
+                    if (estado === 'duty') {
+                        btnDuty.classList.add('disabled'); btnDuty.disabled = true;
+                        btnPause.classList.remove('disabled'); btnPause.disabled = false;
+                        btnOff.classList.remove('disabled'); btnOff.disabled = false;
+                    } else if (estado === 'pause') {
+                        btnDuty.classList.remove('disabled'); btnDuty.disabled = false;
+                        btnPause.classList.add('disabled'); btnPause.disabled = true;
+                        btnOff.classList.remove('disabled'); btnOff.disabled = false;
+                    } else {
+                        btnDuty.classList.remove('disabled'); btnDuty.disabled = false;
+                        btnPause.classList.add('disabled'); btnPause.disabled = true;
+                        btnOff.classList.add('disabled'); btnOff.disabled = true;
+                    }
+                });
+
+                // Verificar Permisos Especiales para Altos Mandos
+                const allowedRoles = ['1496724468092113015', '1496725210521534536'];
+                const isAltoMando = session.roles && session.roles.some(role => allowedRoles.includes(role));
+                if (isAltoMando) {
+                    document.getElementById('menu-altos-mandos').style.display = 'block';
+                }
+            }
+        });
+
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+            if (id === 'modal-busqueda') loadDatabase();
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+
+        async function updateDutyCountBackend() {
+            try {
+                const { data } = await sspc_db.from('actividad_oficiales').select('id').eq('estado', 'duty');
+                const count = data ? data.length : 0;
+                fetch('/api/bot/set_duty_count', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({count: count})
+                });
+            } catch(e) { console.error("Error updating duty count to backend:", e); }
+        }
+
+        // Sistema Auto-Cierre de Servicios (Se ejecuta cada vez que alguien entra a la web)
+        async function limpiarServiciosExpirados() {
+            try {
+                const { data } = await sspc_db.from('actividad_oficiales').select('*').in('estado', ['duty', 'pause']);
+                if (!data) return;
+
+                for (let user of data) {
+                    if (!user.ultimo_inicio) continue;
+                    const diffHours = (Date.now() - new Date(user.ultimo_inicio).getTime()) / 3600000;
+
+                    if (diffHours > 12) {
+                        const nuevasAdvertencias = (user.advertencias || 0) + 1;
+
+                        // Cerrar en Supabase (No se suma el tiempo)
+                        await sspc_db.from('actividad_oficiales').update({
+                            estado: 'off',
+                            message_id: null,
+                            advertencias: nuevasAdvertencias
+                        }).eq('discord_name', user.discord_name);
+
+                        // Mandar DM avisando usando la API del bot
+                        fetch('/api/bot/dm_ausencia', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                discord_name: user.discord_name,
+                                accion: 'rechazar',
+                                razon_rechazo: `⚠️ SISTEMA AUTOMÁTICO: Tu turno ha sido cerrado a la fuerza por superar el límite máximo de 12 horas seguidas (Posible olvido). Todo el tiempo de este turno fue cancelado y no se ha guardado.\n\nTienes **${nuevasAdvertencias}/3 advertencias** en tu expediente por dejar turnos abiertos.`
+                            })
+                        });
+                        console.log(`[Auto-Cierre] Turno de ${user.discord_name} cerrado forzosamente (>12h).`);
+                    }
+                }
+                // Actualizamos el contador de servicio en el bot
+                updateDutyCountBackend();
+            } catch (e) { console.error("Error en Auto-Cierre:", e); }
+        }
+
+        // Llamamos al sistema de limpieza automáticamente
+        limpiarServiciosExpirados();
+
+        async function submitAusencia(event) {
+            event.preventDefault();
+
+            // PEGA AQUÍ TU URL DE WEBHOOK DE DISCORD
+            const WEBHOOK_URL = 'https://discord.com/api/webhooks/1496796751238008923/JnynS4vCUZkEAy5u4kJ4xOGsCZelFJbAsvQiaQVnz3e2tEPvi4yRsfgOYlCt8dKbVR_m';
+
+            const razon = document.getElementById('aus-razon').value.trim();
+            const dias = document.getElementById('aus-dias').value;
+            const session = JSON.parse(localStorage.getItem('sspc_session'));
+            const rank = document.getElementById('user-rank').textContent;
+            const badge = document.getElementById('user-badge').textContent;
+
+            if (badge === "NO ASIGNADA" || badge === "Buscando..." || !badge) {
+                alert("❌ ACCESO DENEGADO: Necesitas tener una PLACA OFICIAL asignada para solicitar ausencias.");
+                return;
+            }
+
+            if (!razon || !dias) {
+                alert("Error: No puedes enviar la solicitud con campos vacíos.");
+                return;
+            }
+
+            if (dias < 1 || dias > 7) {
+                alert("Error: La ausencia debe ser de entre 1 y 7 días.");
+                return;
+            }
+
+            // Preparar mensaje PREMIUM para Discord
+            const embed = {
+                title: "🚨 SOLICITUD OPERATIVA DE AUSENCIA 🚨",
+                description: `El oficial **${session.username}** ha solicitado un periodo de inactividad.`,
+                color: 15844367, // Dorado Vibrante
+                thumbnail: { url: session.avatar },
+                fields: [
+                    { name: "👤 IDENTIDAD", value: `**Nombre:** ${session.username}\n**Placa:** ${badge}\n**Rango:** ${rank}`, inline: true },
+                    { name: "⏳ DURACIÓN", value: `**${dias} Días**`, inline: true },
+                    { name: "📝 JUSTIFICACIÓN", value: `\`\`\`${razon}\`\`\`` }
+                ],
+                footer: {
+                    text: `ID del Oficial: ${session.username} | SSPC - MAZATLAN RP`,
+                    icon_url: "https://images.seeklogo.com/logo-png/62/1/secretaria-de-seguridad-y-proteccion-ciudadana-logo-png_seeklogo-626112.png"
+                },
+                timestamp: new Date()
+            };
+
+            try {
+                if (WEBHOOK_URL === 'ESCRIBE_AQUI_TU_URL_DE_WEBHOOK') {
+                    throw new Error("Configuración incompleta: Falta la URL del Webhook.");
+                }
+
+                // Obtener ID del mensaje de Discord
+                const res = await fetch(WEBHOOK_URL + "?wait=true", {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ embeds: [embed] })
+                });
+                const webhookData = await res.json();
+                const msgId = webhookData.id;
+
+                // Guardar en Supabase
+                const { error } = await sspc_db.from('ausencias').insert([{
+                    oficial_discord: session.username,
+                    rango: rank,
+                    placa: badge,
+                    razon: razon,
+                    dias: parseInt(dias),
+                    estado: 'pendiente',
+                    message_id: msgId
+                }]);
+
+                if (error) {
+                    console.error("Error DB:", error);
+                    alert("Aviso: El mensaje se envió pero no se guardó en la DB de ausencias. ¿Creaste la tabla en Supabase?");
+                }
+
+                alert(`✅ SOLICITUD ENVIADA AL CANAL DE MANDOS Y REGISTRADA.\n\nINSTRUCCIONES:\n1. Espera a que un mando la apruebe (te llegará DM).\n2. Una vez aprobada, NO podrás hacer Roleplay.\n3. Si se te detecta haciendo RP, serás depuesto.`);
+
+                document.getElementById('form-ausencia').reset();
+                closeModal('modal-ausencia');
+
+            } catch (err) {
+                console.error(err);
+                alert("⚠️ Error al enviar a Discord: " + err.message + "\n\nAsegúrate de haber configurado la URL del Webhook en el código.");
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('sspc_session');
+            window.location.href = 'index.html';
+        }
+    </script>
+
+    <!-- Librería de Supabase para Base de Datos en la Nube (Netlify compatible) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+        // --- CONFIGURACIÓN DE BASE DE DATOS (SUPABASE) ---
+        const SUPABASE_URL = 'https://cmunztvfhsfsysrrmveo.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNtdW56dHZmaHNmc3lzcnJtdmVvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5MjEwMTEsImV4cCI6MjA5MjQ5NzAxMX0.bfKsQHPyrk9fkyyW9ekNYEDdpBDeyupFjlzgfirCXro';
+
+        // Evitar bloqueo de "Tracking Prevention" desactivando persistencia de sesión
+        const sspc_db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+            auth: { persistSession: false }
+        });
+
+        let allRecords = [];
+
+        async function loadDatabase() {
+            const resultsContainer = document.getElementById('db-results');
+            resultsContainer.innerHTML = '<p style="text-align: center; color: var(--gold); padding: 20px;">Cargando base de datos...</p>';
+
+            const { data, error } = await sspc_db
+                .from('registros')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                console.error("Error cargando DB:", error);
+                resultsContainer.innerHTML = `<p style="color:red; text-align:center;">Error: ${error.message}</p>`;
+                return;
+            }
+
+            allRecords = data || [];
+            renderCitizenCards("");
+        }
+
+        function renderCitizenCards(query) {
+            const resultsContainer = document.getElementById('db-results');
+            resultsContainer.style.display = 'grid'; // Restaurar Grid para las tarjetas
+            const q = query.toLowerCase();
+
+            // Agrupar por Ciudadano (Roblox Name)
+            const citizens = {};
+            allRecords.forEach(rec => {
+                const name = rec.roblox;
+                if (!citizens[name]) {
+                    citizens[name] = {
+                        name: name,
+                        discord: rec.discord,
+                        arrests: 0,
+                        fines: 0,
+                        recent: rec,
+                        matches: false
+                    };
+                }
+                if (rec.tipo === 'arresto') citizens[name].arrests++;
+                if (rec.tipo === 'multa') citizens[name].fines++;
+
+                // Marcar si coincide con la búsqueda
+                if (q && (name.toLowerCase().includes(q) || rec.discord.toLowerCase().includes(q))) {
+                    citizens[name].matches = true;
+                }
+            });
+
+            let citizenArray = Object.values(citizens);
+
+            // Filtrar: Mostrar solo los que coinciden con la búsqueda
+            if (q) {
+                citizenArray = citizenArray.filter(c => c.matches);
+            }
+
+            if (citizenArray.length === 0) {
+                resultsContainer.style.display = 'block';
+                resultsContainer.innerHTML = '<p style="text-align: center; color: #888; padding: 20px;">No se encontraron registros para tu búsqueda.</p>';
+                return;
+            }
+
+            resultsContainer.innerHTML = citizenArray.map(c => `
+                <div class="citizen-card" style="cursor: pointer; ${c.matches ? 'border-color: var(--gold); box-shadow: 0 0 10px rgba(201,168,76,0.2);' : ''}" onclick="viewExpediente('${c.name}')">
+                    <div class="card-top">
+                        <div class="citizen-img-container">
+                            <img src="${c.recent.evidencia}" class="citizen-img" onerror="this.src='https://i.imgur.com/8NBa8pW.png'">
+                        </div>
+                        <div class="citizen-main">
+                            <div class="citizen-header">
+                                <div class="citizen-name">${c.name}</div>
+                                <div class="stat-badges">
+                                    <span class="badge badge-arrests">${c.arrests} Arr.</span>
+                                    <span class="badge badge-fines">${c.fines} Mul.</span>
+                                </div>
+                            </div>
+                            <div class="db-info" style="font-size: 11px; color:#aaa;">ID: ${c.discord}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="recent-box">
+                        <b>Último Suceso:</b><br>
+                        ${c.recent.tipo.toUpperCase()} - ${c.recent.razon}<br>
+                        <small style="color: #666">${new Date(c.recent.created_at).toLocaleDateString()}</small>
+                    </div>
+                    <div style="text-align: center; margin-top: 10px; font-size: 11px; color: var(--gold);">Haz clic para ver el desglose completo ➡</div>
+                </div>
+            `).join('');
+        }
+
+        function viewExpediente(robloxName) {
+            const resultsContainer = document.getElementById('db-results');
+            resultsContainer.style.display = 'block'; // Quitar Grid para mostrar lista
+
+            // Filtrar todos los registros de esta persona
+            const userRecords = allRecords.filter(r => r.roblox === robloxName);
+
+            // Verificar el rol exacto para borrar: 1496724468092113015
+            const session = JSON.parse(localStorage.getItem('sspc_session')) || {};
+            const canDelete = session.roles && session.roles.includes('1496724468092113015');
+
+            let html = `
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--gold); padding-bottom: 15px; margin-bottom: 20px;">
+                    <div>
+                        <button onclick="renderCitizenCards(document.getElementById('db-search-input').value)" style="background: transparent; color: var(--gold); border: 1px solid var(--gold); padding: 5px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; margin-right: 15px;">⬅ Volver</button>
+                        <span style="font-size: 20px; font-weight: 800; color: white;">EXPEDIENTE: <span style="color: var(--gold);">${robloxName}</span></span>
+                    </div>
+                    ${canDelete ? `<button onclick="deleteExpediente('${robloxName}')" style="background: rgba(255, 71, 87, 0.2); color: #ff4757; border: 1px solid #ff4757; padding: 8px 15px; border-radius: 6px; font-weight: bold; cursor: pointer;">🗑️ ELIMINAR EXPEDIENTE</button>` : ''}
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+            `;
+
+            userRecords.forEach(rec => {
+                const isArrest = rec.tipo === 'arresto';
+                html += `
+                    <div style="background: rgba(255,255,255,0.05); border-left: 4px solid ${isArrest ? '#ff4757' : '#ffa502'}; padding: 15px; border-radius: 0 10px 10px 0; display: flex; gap: 20px;">
+                        <img src="${rec.evidencia}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2);" onerror="this.src='https://i.imgur.com/8NBa8pW.png'">
+                        <div style="flex: 1;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                <span class="badge badge-${isArrest ? 'arrests' : 'fines'}">${rec.tipo.toUpperCase()}</span>
+                                <span style="font-size: 12px; color: #aaa;">${new Date(rec.created_at).toLocaleString()}</span>
+                            </div>
+                            <div style="font-size: 15px; margin-bottom: 5px;"><b>Razón:</b> ${rec.razon}</div>
+                            ${rec.monto ? `<div style="font-size: 14px; margin-bottom: 5px;"><b>Monto de Multa:</b> $${rec.monto}</div>` : ''}
+                            <div style="font-size: 13px; color: #bbb; margin-bottom: 5px;"><b>Anotaciones:</b> ${rec.notas || 'Ninguna'}</div>
+                            <div style="font-size: 12px; color: var(--gold); margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 5px;">
+                                Oficial a cargo: ${rec.oficial} [${rec.placa}]
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += `</div>`;
+            resultsContainer.innerHTML = html;
+        }
+
+        async function deleteExpediente(robloxName) {
+            const confirmacion = confirm(`⚠️ ALTO MANDO: ¿Estás seguro de eliminar TODO el expediente de ${robloxName}?\nSe borrarán todos sus arrestos y multas de forma permanente.`);
+
+            if (!confirmacion) return;
+
+            const { error } = await sspc_db.from('registros').delete().eq('roblox', robloxName);
+
+            if (error) {
+                alert("❌ Error al eliminar: " + error.message);
+            } else {
+                alert(`✅ Expediente de ${robloxName} eliminado correctamente.`);
+                loadDatabase(); // Recargar los datos actualizados
+            }
+        }
+
+        async function performSearch() {
+            const query = document.getElementById('db-search-input').value;
+            renderCitizenCards(query);
+        }
+
+        async function saveToDB(data) {
+            const { error } = await sspc_db.from('registros').insert([data]);
+            if (error) {
+                console.error("❌ ERROR AL GUARDAR EN DB:", error.message, error.details, error.hint);
+                alert("Error de Base de Datos: " + error.message);
+            } else {
+                console.log("✅ Registro guardado en Supabase con éxito.");
+            }
+        }
+
+        async function deleteRecord(id) {
+            if (!confirm("¿Eliminar permanentemente?")) return;
+            const { error } = await sspc_db.from('registros').delete().eq('id', id);
+            if (error) {
+                alert("No tienes permisos o hubo un error: " + error.message);
+            } else {
+                performSearch();
+            }
+        }
+
+        async function submitMulta(event) {
+            event.preventDefault();
+            const WEBHOOK_MULTA = 'https://discord.com/api/webhooks/1496800133503909918/HLDxQAPiQwk6TAUmQFNB_wXXxyByBY-r2yr5fVB2kae8MCVmkZMBTve7dsIQa1DU1dAK';
+
+            const roblox = document.getElementById('mul-roblox').value;
+            const discord = document.getElementById('mul-discord').value;
+            const razon = document.getElementById('mul-razon').value;
+            const monto = document.getElementById('mul-monto').value;
+            const notas = document.getElementById('mul-notas').value;
+            const link = document.getElementById('mul-link').value;
+
+            const session = JSON.parse(localStorage.getItem('sspc_session'));
+            const badge = document.getElementById('user-badge').textContent;
+            const rank = document.getElementById('user-rank').textContent;
+
+            // Guardar en SQLite
+            saveToDB({
+                tipo: 'multa', roblox, discord, razon, monto, notas, evidencia: link, oficial: session.username, placa: badge
+            });
+
+            const embed = {
+                title: "🎫 REPORTE DE MULTA - TRÁNSITO SSPC",
+                color: 15105570, // Naranja Tránsito
+                thumbnail: { url: "https://images.seeklogo.com/logo-png/62/1/secretaria-de-seguridad-y-proteccion-ciudadana-logo-png_seeklogo-626112.png" },
+                image: { url: link },
+                fields: [
+                    { name: "👤 INFRACTOR", value: `**Roblox:** ${roblox}\n**Discord:** ${discord}`, inline: false },
+                    { name: "🚗 INFRACCIÓN", value: razon, inline: true },
+                    { name: "💰 MONTO", value: `$${monto}`, inline: true },
+                    { name: "📝 DETALLES OPERATIVOS", value: notas },
+                    { name: "👮 EMITIDO POR", value: `${session.username} [${badge}] - ${rank}` }
+                ],
+                footer: { text: "SSPC Mazatlán RP | Verificar con ✅" },
+                timestamp: new Date()
+            };
+
+            try {
+                await fetch(WEBHOOK_MULTA, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ embeds: [embed] })
+                });
+
+                alert(`✅ MULTA REGISTRADA EXITOSAMENTE.\n\nEl reporte ha sido enviado al canal de tránsito y guardado en la base de datos.`);
+                document.getElementById('form-multa').reset();
+                closeModal('modal-multa');
+            } catch (err) {
+                alert("Error al enviar la multa: " + err.message);
+            }
+        }
+
+        async function submitArresto(event) {
+            event.preventDefault();
+            const WEBHOOK_ARRESTO = 'https://discord.com/api/webhooks/1496799859053826138/wGTAkB-BNeBjRdaTo7POR3Yq_btG_GMOKHoVGAxFN9Fh6_AYbORUY6M2BdrKsZqHEJin';
+
+            const roblox = document.getElementById('arr-roblox').value;
+            const discord = document.getElementById('arr-discord').value;
+            const razon = document.getElementById('arr-razon').value;
+            const multa = document.getElementById('arr-multa').value;
+            const notas = document.getElementById('arr-notas').value;
+            const link = document.getElementById('arr-link').value;
+
+            const session = JSON.parse(localStorage.getItem('sspc_session'));
+            const badge = document.getElementById('user-badge').textContent;
+            const rank = document.getElementById('user-rank').textContent;
+
+            // Guardar en SQLite
+            saveToDB({
+                tipo: 'arresto', roblox, discord, razon, monto: multa, notas, evidencia: link, oficial: session.username, placa: badge
+            });
+
+            const embed = {
+                title: "⚖️ FICHA DE ARRESTO - SSPC MAZATLAN",
+                color: 2061738, // Rojo Policial
+                thumbnail: { url: "https://images.seeklogo.com/logo-png/62/1/secretaria-de-seguridad-y-proteccion-ciudadana-logo-png_seeklogo-626112.png" },
+                image: { url: link },
+                fields: [
+                    { name: "👤 DETENIDO", value: `**Roblox:** ${roblox}\n**Discord:** ${discord}`, inline: false },
+                    { name: "📖 DELITO (C.P)", value: razon, inline: true },
+                    { name: "💰 MULTA", value: `$${multa}`, inline: true },
+                    { name: "📝 ANOTACIONES", value: notas },
+                    { name: "👮 ARRESTADO POR", value: `${session.username} [${badge}] - ${rank}` }
+                ],
+                footer: { text: "Verificar con ✅ | Si no se marca, la ficha no es válida." },
+                timestamp: new Date()
+            };
+
+            try {
+                await fetch(WEBHOOK_ARRESTO, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ embeds: [embed] })
+                });
+
+                alert(`✅ FICHA DE ARRESTO PUBLICADA.\n\nEl reporte ha sido enviado y guardado en la base de datos.`);
+
+                document.getElementById('form-arresto').reset();
+                closeModal('modal-arresto');
+            } catch (err) {
+                alert("Error al enviar la ficha: " + err.message);
+            }
+        }
+
+        async function updateService(status) {
+            const btnDuty = document.getElementById('btn-duty');
+            const btnPause = document.getElementById('btn-pause');
+            const btnOff = document.getElementById('btn-off');
+
+            const badge = document.getElementById('user-badge').textContent;
+            if (badge === "NO ASIGNADA" || badge === "Buscando..." || !badge) {
+                return alert("❌ ERROR CRÍTICO: No posees una PLACA OFICIAL registrada. Un Alto Mando debe asignarte una para operar.");
+            }
+
+            const session = JSON.parse(localStorage.getItem('sspc_session'));
+            const rank = document.getElementById('user-rank').textContent;
+            
+            // WEBHOOK DE ACTIVIDAD APLICADO
+            const webhookUrl = 'https://discord.com/api/webhooks/1496932928909869066/srTH8xxO7kFQ_iUluyrZCgDie8USOJis_Bk79NIajvWyMO4x2Ni9d4mXmCfOcGOX4OuU'; 
+
+            if (webhookUrl === 'TU_URL_DE_WEBHOOK_ACTIVIDAD_AQUI') {
+                return alert("⚠️ Alto Mando: Debes pegar la URL del webhook del canal de Actividad en el archivo dashboard.html (línea ~1025) para que esto funcione.");
+            }
+
+            btnDuty.disabled = true; btnPause.disabled = true; btnOff.disabled = true;
+
+            const { data: act } = await sspc_db.from('actividad_oficiales').select('*').eq('discord_name', session.username).single();
+
+            let estadoActual = act ? act.estado : 'off';
+            let tiempoAcumulado = act ? act.tiempo_semanal : 0;
+            let ultimoInicio = act ? act.ultimo_inicio : null;
+            let messageId = act ? act.message_id : null;
+
+            const ahoraUTC = new Date().toISOString();
+            const timestampDiscord = Math.floor(Date.now() / 1000);
+
+            if (status === 'duty') {
+                if (estadoActual === 'duty') { alert("Ya estás en servicio."); return location.reload(); }
+
+                // Mensaje NUEVO en Discord
+                const embed = {
+                    title: "🟢 INICIO DE SERVICIO - SSPC",
+                    description: `El oficial **${session.username}** ha entrado en servicio.\n\n⏱️ **Tiempo activo desde:** <t:${timestampDiscord}:R>`,
+                    color: 3066993,
+                    fields: [{ name: "👤 Oficial", value: `**Nombre:** ${session.username}\n**Placa:** ${badge}\n**Rango:** ${rank}`, inline: false }],
+                    footer: { text: "Sistema de Actividad SSPC" },
+                    timestamp: new Date()
+                };
+
+                try {
+                    const res = await fetch(webhookUrl + "?wait=true", { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ embeds: [embed] }) });
+                    const wData = await res.json();
+                    messageId = wData.id;
+                } catch (e) { console.error(e); }
+
+                if (!act) {
+                    await sspc_db.from('actividad_oficiales').insert([{ discord_name: session.username, roblox_name: '', placa: badge, rango: rank, estado: 'duty', ultimo_inicio: ahoraUTC, message_id: messageId }]);
+                } else {
+                    await sspc_db.from('actividad_oficiales').update({ estado: 'duty', ultimo_inicio: ahoraUTC, message_id: messageId }).eq('discord_name', session.username);
+                }
+                alert("🟢 Servicio Iniciado exitosamente.");
+            }
+            else if (status === 'pause') {
+                if (estadoActual !== 'duty') { alert("No puedes pausar si no estás en servicio."); return location.reload(); }
+
+                const start = new Date(ultimoInicio).getTime();
+                const diffSeconds = Math.floor((Date.now() - start) / 1000);
+                tiempoAcumulado += diffSeconds;
+
+                let totalHours = Math.floor(tiempoAcumulado / 3600);
+                let totalMins = Math.floor((tiempoAcumulado % 3600) / 60);
+
+                if (messageId) {
+                    const embed = {
+                        title: "🟡 SERVICIO EN PAUSA - SSPC",
+                        description: `El oficial **${session.username}** está actualmente en una pausa operativa (10-7).\n\n⏱️ **Tiempo Semanal Acumulado:** ${totalHours} horas y ${totalMins} minutos.`,
+                        color: 16766720,
+                        fields: [{ name: "👤 Oficial", value: `**Nombre:** ${session.username}\n**Placa:** ${badge}\n**Rango:** ${rank}`, inline: false }],
+                        footer: { text: "Sistema de Actividad SSPC" },
+                        timestamp: new Date()
+                    };
+                    try { await fetch(`${webhookUrl}/messages/${messageId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ embeds: [embed] }) }); } catch (e) { }
+                }
+
+                await sspc_db.from('actividad_oficiales').update({ estado: 'pause', tiempo_semanal: tiempoAcumulado, ultimo_inicio: ahoraUTC }).eq('discord_name', session.username);
+                alert(`🟡 Servicio Pausado. Tiempo añadido a la base de datos.`);
+            }
+            else if (status === 'off') {
+                if (estadoActual === 'off') { alert("Ya estás fuera de servicio."); return location.reload(); }
+
+                let diffSeconds = 0;
+                if (estadoActual === 'duty') {
+                    const start = new Date(ultimoInicio).getTime();
+                    diffSeconds = Math.floor((Date.now() - start) / 1000);
+                    tiempoAcumulado += diffSeconds;
+                }
+
+                let totalHours = Math.floor(tiempoAcumulado / 3600);
+                let totalMins = Math.floor((tiempoAcumulado % 3600) / 60);
+
+                if (messageId) {
+                    const embed = {
+                        title: "🔴 FIN DE SERVICIO - SSPC",
+                        description: `El oficial **${session.username}** ha finalizado su patrullaje.\n\n⏱️ **Tiempo Semanal Total:** ${totalHours} horas y ${totalMins} minutos.\n*El mensaje de servicio ha sido cerrado permanentemente.*`,
+                        color: 15158332,
+                        fields: [{ name: "👤 Oficial", value: `**Nombre:** ${session.username}\n**Placa:** ${badge}\n**Rango:** ${rank}`, inline: false }],
+                        footer: { text: "Sistema de Actividad SSPC" },
+                        timestamp: new Date()
+                    };
+                    try { await fetch(`${webhookUrl}/messages/${messageId}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ embeds: [embed] }) }); } catch (e) { }
+                }
+
+                await sspc_db.from('actividad_oficiales').update({ estado: 'off', tiempo_semanal: tiempoAcumulado, message_id: null }).eq('discord_name', session.username);
+                alert(`🔴 Servicio Finalizado. Tienes un total acumulado de ${totalHours}h ${totalMins}m en la base de datos.`);
+            }
+
+            // Avisamos al backend Python para que mantenga el conteo actualizado
+            updateDutyCountBackend();
+            location.reload();
+        }
+
+        // --- LÓGICA DEL MODAL DE ACTIVIDAD (ALTOS MANDOS) ---
+        async function openModalActividad() {
+            openModal('modal-actividad');
+            await loadActividad();
+        }
+
+        async function loadActividad() {
+            const tbody = document.getElementById('lista-actividad');
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 20px;">Cargando...</td></tr>';
+
+            const { data, error } = await sspc_db.from('actividad_oficiales').select('*').order('tiempo_semanal', { ascending: false });
+            if (error) return tbody.innerHTML = `<tr><td colspan="6" style="color:red; text-align:center;">Error: ${error.message}</td></tr>`;
+
+            if (data.length === 0) return tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">No hay registros de actividad.</td></tr>';
+
+            tbody.innerHTML = data.map(o => {
+                let colorEstado = o.estado === 'duty' ? '#2ecc71' : (o.estado === 'pause' ? '#f1c40f' : '#95a5a6');
+                let estadoTxt = o.estado === 'duty' ? 'EN SERVICIO' : (o.estado === 'pause' ? 'EN PAUSA' : 'INACTIVO');
+
+                let hours = Math.floor(o.tiempo_semanal / 3600);
+                let minutes = Math.floor((o.tiempo_semanal % 3600) / 60);
+                let tiempoTxt = `${hours}h ${minutes}m`;
+
+                return `
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <td style="padding: 10px;">${o.discord_name}</td>
+                    <td style="padding: 10px; color: var(--gold); font-weight: bold;">${o.placa}</td>
+                    <td style="padding: 10px;"><span style="color: ${colorEstado}; font-weight: bold;">● ${estadoTxt}</span></td>
+                    <td style="padding: 10px; font-weight: bold;">${tiempoTxt}</td>
+                    <td style="padding: 10px; color: #ff4757;">${o.advertencias}/3</td>
+                    <td style="padding: 10px;">
+                        <button onclick="editarTiempo('${o.discord_name}', ${o.tiempo_semanal})" style="background: #34495e; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 11px;">Editar Tiempo</button>
+                        ${o.estado !== 'off' ? `<button onclick="forzarCierre('${o.discord_name}')" style="background: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 11px; margin-left: 5px;">Forzar Cierre</button>` : ''}
+                        <button onclick="eliminarOficial('${o.discord_name}')" style="background: #95a5a6; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 11px; margin-left: 5px;">Eliminar</button>
+                    </td>
+                </tr>
+                `;
+            }).join('');
+        }
+
+        async function editarTiempo(discordName, tiempoActual) {
+            const sumar = prompt("Escribe los MINUTOS que deseas sumar (usa negativos para restar, ej: -30):");
+            if (!sumar || isNaN(sumar)) return;
+            const nuevoTiempo = Math.max(0, tiempoActual + (parseInt(sumar) * 60));
+
+            await sspc_db.from('actividad_oficiales').update({ tiempo_semanal: nuevoTiempo }).eq('discord_name', discordName);
+            await loadActividad();
+        }
+
+        async function forzarCierre(discordName) {
+            if (!confirm(`¿Forzar el cierre de turno de ${discordName}? (El tiempo desde su último inicio NO se sumará)`)) return;
+            await sspc_db.from('actividad_oficiales').update({ estado: 'off', message_id: null }).eq('discord_name', discordName);
+            await loadActividad();
+            alert("Turno cerrado forzosamente.");
+        }
+
+        async function eliminarOficial(discordName) {
+            if (!confirm(`⚠️ ¿Estás totalmente seguro de ELIMINAR el registro completo de ${discordName}? (Esta acción no se puede deshacer)`)) return;
+            await sspc_db.from('actividad_oficiales').delete().eq('discord_name', discordName);
+            await loadActividad();
+        }
+
+        async function reiniciarSemana() {
+            if (!confirm("⚠️ ¡ALTO! ¿Estás seguro de finalizar la semana? Esto borrará todos los tiempos de actividad de todos los oficiales para empezar una nueva semana.")) return;
+            
+            // Supabase necesita una condición para el update masivo
+            const { data } = await sspc_db.from('actividad_oficiales').select('discord_name');
+            if(data) {
+                for(let user of data) {
+                    await sspc_db.from('actividad_oficiales').update({ tiempo_semanal: 0, estado: 'off', message_id: null }).eq('discord_name', user.discord_name);
+                }
+            }
+            alert("✅ Tiempos reseteados a 0. Todos inician la nueva semana limpios.");
+            await loadActividad();
+        }
+
+        // --- LÓGICA DE AUSENCIAS (ALTOS MANDOS) ---
+        async function openModalVerAusencias() {
+            openModal('modal-ver-ausencias');
+            await loadAusencias();
+        }
+
+        async function loadAusencias() {
+            const lista = document.getElementById('lista-ver-ausencias');
+            lista.innerHTML = '<p style="text-align: center; color: var(--gold);">Cargando ausencias...</p>';
+
+            const { data, error } = await sspc_db.from('ausencias').select('*').order('created_at', { ascending: false });
+
+            if (error) {
+                lista.innerHTML = `<p style="color:red; text-align:center;">Error: ${error.message}</p>`;
+                return;
+            }
+
+            if (data.length === 0) {
+                lista.innerHTML = '<p style="text-align: center; color: #888;">No hay ausencias registradas.</p>';
+                return;
+            }
+
+            lista.innerHTML = data.map(a => {
+                let colorBorder = '#ffa502'; // Pendiente amarillo
+                if (a.estado === 'aceptada') colorBorder = '#2ecc71';
+                if (a.estado === 'rechazada') colorBorder = '#e74c3c';
+
+                const expDate = new Date(a.created_at);
+                expDate.setDate(expDate.getDate() + a.dias);
+                const isExpired = new Date() > expDate;
+
+                return `
+                <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; border-left: 4px solid ${colorBorder}; position: relative;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <b style="color: white; font-size: 16px;">${a.oficial_discord} [${a.placa}]</b>
+                        <span class="badge" style="background: ${colorBorder}; color: white; padding: 4px 8px; border-radius: 4px;">${a.estado.toUpperCase()}</span>
+                    </div>
+                    <div style="font-size: 14px; color: #ccc; margin-bottom: 5px;"><b>Días:</b> ${a.dias} (Expira: ${expDate.toLocaleDateString()})</div>
+                    <div style="font-size: 14px; color: #ccc; margin-bottom: 10px;"><b>Razón:</b> ${a.razon}</div>
+                    ${a.rechazo_razon ? `<div style="font-size: 13px; color: #ff6b6b; margin-bottom: 10px;"><b>Motivo Rechazo:</b> ${a.rechazo_razon}</div>` : ''}
+                    
+                    <div style="display: flex; gap: 10px; margin-top: 15px;">
+                        ${a.estado === 'pendiente' ? `
+                            <button onclick="gestionarAusencia('${a.id}', 'aceptada', '${a.oficial_discord}', '${a.message_id}')" style="background: rgba(46, 204, 113, 0.2); color: #2ecc71; border: 1px solid #2ecc71; padding: 6px 12px; border-radius: 5px; cursor: pointer; flex: 1;">Aceptar</button>
+                            <button onclick="gestionarAusencia('${a.id}', 'rechazada', '${a.oficial_discord}', '${a.message_id}')" style="background: rgba(231, 76, 60, 0.2); color: #e74c3c; border: 1px solid #e74c3c; padding: 6px 12px; border-radius: 5px; cursor: pointer; flex: 1;">Rechazar</button>
+                        ` : ''}
+                        ${(isExpired || a.estado !== 'pendiente') ? `
+                            <button onclick="eliminarAusencia('${a.id}')" style="background: transparent; color: #888; border: 1px solid #555; padding: 6px 12px; border-radius: 5px; cursor: pointer; margin-left: auto;">Eliminar (Limpieza)</button>
+                        ` : ''}
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        async function gestionarAusencia(id, nuevoEstado, discordName, messageId) {
+            let razonRechazo = "";
+            if (nuevoEstado === 'rechazada') {
+                razonRechazo = prompt("Escribe la razón del rechazo para enviarla al oficial:");
+                if (razonRechazo === null) return; // Canceló
+            }
+
+            if (!confirm(`¿Estás seguro de marcar esta ausencia como ${nuevoEstado.toUpperCase()}?`)) return;
+
+            // 1. Actualizar Supabase
+            await sspc_db.from('ausencias').update({ estado: nuevoEstado, rechazo_razon: razonRechazo }).eq('id', id);
+
+            // 2. Enviar DM al oficial vía Python API
+            try {
+                await fetch('/api/bot/dm_ausencia', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ discord_name: discordName, accion: nuevoEstado === 'aceptada' ? 'aceptar' : 'rechazar', razon_rechazo: razonRechazo })
+                });
+            } catch (e) {
+                console.error("Error enviando DM:", e);
+            }
+
+            // 3. Modificar Embed en Webhook preservando toda la información original
+            if (messageId && messageId !== 'null' && messageId !== 'undefined') {
+                const webhookUrl = 'https://discord.com/api/webhooks/1496796751238008923/JnynS4vCUZkEAy5u4kJ4xOGsCZelFJbAsvQiaQVnz3e2tEPvi4yRsfgOYlCt8dKbVR_m';
+
+                try {
+                    // Obtener el mensaje original del webhook
+                    const resMsg = await fetch(`${webhookUrl}/messages/${messageId}`);
+                    if (resMsg.ok) {
+                        const msgObj = await resMsg.json();
+
+                        if (msgObj.embeds && msgObj.embeds.length > 0) {
+                            let originalEmbed = msgObj.embeds[0];
+
+                            // Modificar color y descripción, conservando todo lo demás
+                            originalEmbed.color = nuevoEstado === 'aceptada' ? 3066993 : 15158332; // Verde o Rojo
+                            originalEmbed.description = nuevoEstado === 'aceptada'
+                                ? `El oficial **${discordName}** ha solicitado un periodo de inactividad.\n\n✅ **ESTADO FINAL: APROBADA**`
+                                : `El oficial **${discordName}** ha solicitado un periodo de inactividad.\n\n❌ **ESTADO FINAL: RECHAZADA**\n**Motivo del Mando:** ${razonRechazo}`;
+
+                            // Quitar el field de "INSTRUCCIÓN PARA MANDOS" para limpiar el mensaje
+                            if (originalEmbed.fields) {
+                                originalEmbed.fields = originalEmbed.fields.filter(f => !f.name.includes("INSTRUCCIÓN PARA MANDOS"));
+                            }
+
+                            // Enviar parche
+                            await fetch(`${webhookUrl}/messages/${messageId}`, {
+                                method: 'PATCH',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ embeds: [originalEmbed] })
+                            });
+                        }
+                    }
+                } catch (e) { console.error("Error modificando webhook:", e); }
+            }
+
+            alert("Estado actualizado y mensaje directo enviado.");
+            await loadAusencias();
+        }
+
+        async function eliminarAusencia(id) {
+            if (!confirm("¿Eliminar registro permanentemente de la base de datos?")) return;
+            await sspc_db.from('ausencias').delete().eq('id', id);
+            await loadAusencias();
+        }
+
+        // --- LÓGICA DE PLACAS (ALTOS MANDOS) ---
+        async function openModalPlacas() {
+            openModal('modal-placas');
+            await loadPlacas();
+        }
+
+        async function loadPlacas() {
+            const lista = document.getElementById('lista-placas');
+            const select = document.getElementById('placa-numero');
+
+            select.innerHTML = '<option value="">Cargando disponibles...</option>';
+            lista.innerHTML = '<p style="text-align: center; color: var(--gold);">Cargando placas...</p>';
+
+            const { data, error } = await sspc_db.from('placas').select('*').order('placa_numero', { ascending: true });
+
+            if (error) {
+                lista.innerHTML = `<p style="color:red; text-align:center;">Error: ${error.message} (Asegúrate de que la tabla 'placas' exista en Supabase)</p>`;
+                select.innerHTML = '<option value="">Error de DB</option>';
+                return;
+            }
+
+            // Generar opciones de select (01 a 99) excluyendo las asignadas
+            const asignadas = data.map(p => p.placa_numero);
+            select.innerHTML = '<option value="">Selecciona un número...</option>';
+            for (let i = 1; i <= 99; i++) {
+                const numStr = i.toString().padStart(2, '0');
+                if (!asignadas.includes(numStr)) {
+                    select.innerHTML += `<option value="${numStr}">${numStr}</option>`;
+                }
+            }
+
+            // Renderizar lista de asignadas
+            if (data.length === 0) {
+                lista.innerHTML = '<p style="text-align: center; color: #888;">No hay placas asignadas actualmente.</p>';
+                return;
+            }
+
+            lista.innerHTML = data.map(p => `
+                <div style="background: rgba(255,255,255,0.05); padding: 10px 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; border-left: 3px solid var(--gold);">
+                    <div>
+                        <b style="color: var(--gold); font-size: 16px;">SPC-${p.placa_numero}</b>
+                        <span style="color: #ccc; margin-left: 10px;">${p.roblox || 'N/A'} | ${p.discord}</span>
+                    </div>
+                    <button onclick="eliminarPlaca('${p.placa_numero}', '${p.message_id}')" style="background: #ff4757; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 12px; transition: 0.2s;">Revocar</button>
+                </div>
+            `).join('');
+        }
+
+        async function asignarPlaca(event) {
+            event.preventDefault();
+            const discord = document.getElementById('placa-discord').value.trim();
+            const roblox = document.getElementById('placa-roblox').value.trim();
+            const numero = document.getElementById('placa-numero').value;
+            if (!numero) return alert("Selecciona un número de placa válido.");
+
+            // Validar que no tenga otra placa
+            const { data: existing } = await sspc_db.from('placas').select('*').or(`discord.eq.${discord},roblox.eq.${roblox}`);
+            if (existing && existing.length > 0) {
+                return alert("❌ ERROR: Este oficial ya tiene una placa asignada. Un oficial solo puede tener una placa.");
+            }
+
+            // Enviar mensaje a Discord y obtener el ID del mensaje
+            const messageId = await sendPlacaWebhook(discord, roblox, numero);
+
+            const { error } = await sspc_db.from('placas').insert([{ discord: discord, roblox: roblox, placa_numero: numero, message_id: messageId }]);
+            if (error) {
+                alert("Error al asignar placa: " + error.message);
+                return;
+            }
+
+            // --- NUEVO: Llamar al Bot de Python para cambiar el Apodo ---
+            const nuevo_apodo = `SPC-${numero} - ${roblox}`;
+            try {
+                const apiRes = await fetch('/api/bot/cambiar_apodo', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ discord_name: discord, nuevo_apodo: nuevo_apodo })
+                });
+                const apiData = await apiRes.json();
+                if (apiData.status === 'error') {
+                    console.warn("Aviso del Bot:", apiData.message);
+                    alert(`✅ Placa asignada, pero hubo un aviso con el apodo: ${apiData.message}`);
+                } else {
+                    alert(`✅ Placa SPC-${numero} asignada y apodo actualizado con éxito.`);
+                }
+            } catch (e) {
+                console.error("Error contactando API del bot:", e);
+                alert(`✅ Placa asignada, pero no se pudo contactar al bot para cambiar el apodo.`);
+            }
+
+            document.getElementById('form-placas').reset();
+            await loadPlacas();
+        }
+
+        async function eliminarPlaca(numero, messageId) {
+            if (!confirm(`⚠️ ¿Estás seguro de REVOCAR la asignación de la placa SPC-${numero}?`)) return;
+
+            // Eliminar el mensaje de Discord si existe
+            if (messageId && messageId !== 'null' && messageId !== 'undefined') {
+                const webhook = "https://discord.com/api/webhooks/1496812525038207017/vDHJ_l20HSTdfQcW2f-TyfVNuZb1AU-lo5TLFNYwK2L9TQs4ZOcz1viZWuUJY033E5OI";
+                try {
+                    await fetch(`${webhook}/messages/${messageId}`, { method: 'DELETE' });
+                } catch (e) {
+                    console.error("No se pudo borrar el mensaje de Discord:", e);
+                }
+            }
+
+            const { error } = await sspc_db.from('placas').delete().eq('placa_numero', numero);
+            if (error) alert("Error: " + error.message);
+            else {
+                alert("✅ Placa liberada y mensaje eliminado correctamente.");
+                await loadPlacas();
+            }
+        }
+
+        async function sendPlacaWebhook(discord, roblox, numero) {
+            const webhook = "https://discord.com/api/webhooks/1496812525038207017/vDHJ_l20HSTdfQcW2f-TyfVNuZb1AU-lo5TLFNYwK2L9TQs4ZOcz1viZWuUJY033E5OI";
+            const content = `[SPC-${numero}] ${roblox} | ${discord}`;
+
+            try {
+                // ?wait=true es necesario para que Discord devuelva el objeto del mensaje con su ID
+                const response = await fetch(webhook + "?wait=true", {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ content: content })
+                });
+                const data = await response.json();
+                return data.id; // Retorna el message_id de Discord
+            } catch (e) {
+                console.error("Error sending webhook:", e);
+                return null;
+            }
+        }
+
+        // --- LÓGICA DE ANUNCIOS INSTITUCIONALES ---
+        async function submitAnuncio(event) {
+            event.preventDefault();
+
+            const titulo = document.getElementById('anu-titulo').value.trim();
+            const contenido = document.getElementById('anu-contenido').value.trim();
+            const session = JSON.parse(localStorage.getItem('sspc_session'));
+            
+            if(titulo.length < 5 || contenido.length < 15) {
+                return alert("El título y el contenido son muy cortos. Detalla más la información.");
+            }
+
+            // 1. Enviar a Discord (Webhook con @everyone)
+            const webhookUrl = 'https://discord.com/api/webhooks/1496939264653529110/MDQpFMe_32yEiu_a6OCQYz1Ih4oGWk_nJoTjOZiliFefpXMUJxvnElD3m5gl2C2jkiT8';
+            const payload = {
+                content: "@everyone", // Ping real en texto plano
+                embeds: [{
+                    title: `📢 ${titulo}`,
+                    description: contenido,
+                    color: 16766720, // Oro/Amarillo Institucional
+                    footer: { text: `Publicado por el Mando: ${session.username} | SSPC` },
+                    timestamp: new Date()
+                }]
+            };
+
+            try {
+                await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+            } catch(e) {
+                console.error("Error al enviar el anuncio por Discord:", e);
+                alert("Advertencia: No se pudo conectar con Discord, pero se intentará guardar en la base de datos.");
+            }
+
+            // 2. Guardar en Supabase (Solo duran 1 semana visualmente)
+            const { error } = await sspc_db.from('anuncios').insert([{
+                titulo: titulo,
+                contenido: contenido,
+                autor: session.username
+            }]);
+
+            if(error) {
+                console.error("Error guardando anuncio:", error);
+                alert("Error al guardar en la base de datos (Asegúrate de haber creado la tabla 'anuncios' en Supabase con las columnas: titulo, contenido, autor).");
+            } else {
+                alert("✅ Anuncio Institucional publicado exitosamente.");
+                document.getElementById('form-anuncio').reset();
+                closeModal('modal-anuncio');
+                await loadAnuncios();
+            }
+        }
+
+        async function loadAnuncios() {
+            const container = document.getElementById('lista-anuncios-dashboard');
+            
+            // Calculamos la fecha de hace 7 días (para filtrar y borrar automáticamente)
+            const haceUnaSemana = new Date();
+            haceUnaSemana.setDate(haceUnaSemana.getDate() - 7);
+            const isoFilter = haceUnaSemana.toISOString();
+
+            // Verificamos si es Alto Mando para mostrar botones
+            const session = JSON.parse(localStorage.getItem('sspc_session'));
+            const allowedRoles = ['1496724468092113015', '1496725210521534536'];
+            const isAltoMando = session && session.roles && session.roles.some(role => allowedRoles.includes(role));
+
+            try {
+                // Borrado automático silencioso de la Base de Datos (Limpieza)
+                await sspc_db.from('anuncios').delete().lt('created_at', isoFilter);
+
+                // Traer los anuncios actuales
+                const { data, error } = await sspc_db.from('anuncios')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                if (data.length === 0) {
+                    container.innerHTML = `<p style="text-align: center; color: rgba(255,255,255,0.5); font-style: italic; margin-top: 10px;">No hay anuncios recientes.</p>`;
+                    return;
+                }
+
+                container.innerHTML = data.map(anu => {
+                    // Formateo relativo de fecha (Hace X horas/días)
+                    const diffMs = Date.now() - new Date(anu.created_at).getTime();
+                    const diffHrs = Math.floor(diffMs / 3600000);
+                    const diffDays = Math.floor(diffHrs / 24);
+                    let timeTxt = "HOY";
+                    if(diffHrs > 0 && diffHrs < 24) timeTxt = `Hace ${diffHrs}h`;
+                    if(diffDays >= 1) timeTxt = `Hace ${diffDays}d`;
+
+                    // Botones de Alto Mando
+                    let adminBtns = "";
+                    if(isAltoMando) {
+                        const safeTitulo = anu.titulo.replace(/'/g, "\\'");
+                        const safeContenido = anu.contenido.replace(/'/g, "\\'").replace(/\n/g, "\\n");
+                        adminBtns = `
+                            <div style="margin-top: 8px;">
+                                <button onclick="editarAnuncio('${anu.id}', '${safeTitulo}', '${safeContenido}')" style="background: #3498db; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 11px;">Modificar</button>
+                                <button onclick="eliminarAnuncio('${anu.id}')" style="background: #e74c3c; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 11px; margin-left: 5px;">Eliminar</button>
+                            </div>
+                        `;
+                    }
+
+                    return `
+                        <div class="ann-item" style="margin-bottom: 15px; border-left: 3px solid var(--gold); padding-left: 10px; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 4px;">
+                            <span class="ann-date" style="color: var(--gold); font-size: 11px; font-weight: bold; margin-bottom: 5px; display: inline-block;">${timeTxt} - Por ${anu.autor}</span>
+                            <h4 style="margin: 0 0 5px 0; color: white; font-size: 14px;">📢 ${anu.titulo}</h4>
+                            <p style="margin: 0; color: #ccc; font-size: 13px; line-height: 1.4; white-space: pre-wrap;">${anu.contenido}</p>
+                            ${adminBtns}
+                        </div>
+                    `;
+                }).join('');
+            } catch(e) {
+                console.error("Error al cargar anuncios:", e);
+                container.innerHTML = `<p style="text-align: center; color: red;">Error al cargar anuncios de la DB.</p>`;
+            }
+        }
+
+        async function eliminarAnuncio(id) {
+            if(!confirm("⚠️ ¿Eliminar este anuncio permanentemente?")) return;
+            await sspc_db.from('anuncios').delete().eq('id', id);
+            await loadAnuncios();
+        }
+
+        async function editarAnuncio(id, currentTitle, currentContent) {
+            const nuevoTitulo = prompt("Modificar Título:", currentTitle);
+            if(nuevoTitulo === null) return;
+            
+            const nuevoContenido = prompt("Modificar Contenido:", currentContent);
+            if(nuevoContenido === null) return;
+
+            if(nuevoTitulo.trim() === "" || nuevoContenido.trim() === "") {
+                return alert("No puedes dejar campos vacíos.");
+            }
+
+            await sspc_db.from('anuncios').update({ titulo: nuevoTitulo, contenido: nuevoContenido }).eq('id', id);
+            alert("✅ Anuncio modificado correctamente.");
+            await loadAnuncios();
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSPC Sinaloa — Secretaría de Seguridad Pública y Ciudadana</title>
+    <meta name="description"
+        content="Portal oficial de la Secretaría de Seguridad Pública y Ciudadana de Sinaloa en ER:LC. Normativa, requisitos y acceso al sistema policial.">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Mexican Flag Accent Bar -->
+    <div class="mexico-bar" aria-hidden="true">
+        <div class="bar-green"></div>
+        <div class="bar-white"></div>
+        <div class="bar-red"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="main-navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <img src="https://images.seeklogo.com/logo-png/62/1/secretaria-de-seguridad-y-proteccion-ciudadana-logo-png_seeklogo-626112.png"
+                    alt="Logo SSPC Sinaloa" id="logo-img">
+            </a>
+
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html" class="active">Inicio</a></li>
+                <li><a href="normativa.html">Normativa</a></li>
+                <li><a href="manual.html">Manual SSPC</a></li>
+                <li><a href="codigo-penal.html">Código Penal</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <button class="btn-ingresar" id="btn-login">Ingresar</button>
+                <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+    <div class="mobile-menu" id="mobile-menu">
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="normativa.html">Normativa</a></li>
+            <li><a href="manual.html">Manual SSPC</a></li>
+            <li><a href="codigo-penal.html">Código Penal</a></li>
+            <li><a href="#" class="mobile-login">Ingresar al Sistema</a></li>
+        </ul>
+    </div>
+
+    <main>
+        <!-- Hero -->
+        <section id="inicio" class="hero">
+            <div class="hero-bg"></div>
+            <div class="hero-overlay"></div>
+            <div class="hero-particles" id="particles"></div>
+            <div class="hero-content">
+                <h1 class="reveal">Secretaría de Seguridad<br>Pública y Ciudadana</h1>
+                <p class="hero-sub reveal">Fortaleciendo la paz y el orden en el Estado de Sinaloa a través de la
+                    proximidad ciudadana y la profesionalización policial.</p>
+                <div class="hero-btns reveal">
+                    <a href="normativa.html" class="btn-gold">Ver normativas</a>
+                    <a href="codigo-penal.html" class="btn-outline">Código Penal</a>
+                </div>
+                <a href="#about" class="scroll-cta reveal">
+                    <span>Saber más</span>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
+                    </svg>
+                </a>
+            </div>
+        </section>
+
+        <!-- About / Bienvenida -->
+        <section id="about" class="section-about">
+            <div class="container">
+                <div class="section-tag reveal">NUESTRA INSTITUCIÓN</div>
+                <h2 class="section-title reveal">🦅 Bienvenido a la SSPC de Sinaloa</h2>
+                <p class="section-lead reveal">La institución pilar en la preservación del orden, la paz y la seguridad
+                    dentro de nuestro estado en ER:LC.</p>
+
+                <div class="mission-card reveal">
+                    <div class="mission-glow"></div>
+                    <p>Nuestra misión es salvaguardar la integridad de los ciudadanos, prevenir el delito y actuar con
+                        firmeza y profesionalismo ante cualquier situación de emergencia. Ser parte de esta facción no
+                        es solo llevar un uniforme; es un compromiso de <strong>lealtad, valor y disciplina.</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Funciones -->
+        <section id="normativa" class="section-functions">
+            <div class="container">
+                <div class="section-tag reveal">FUNCIONES OPERATIVAS</div>
+                <h2 class="section-title reveal">👮‍♂️ ¿De qué nos encargamos?</h2>
+                <div class="functions-grid">
+                    <div class="func-card reveal">
+                        <div class="func-icon">🚔</div>
+                        <h4>Patrullaje Preventivo</h4>
+                        <p>Vigilancia activa en zonas urbanas y rurales del estado.</p>
+                    </div>
+                    <div class="func-card reveal">
+                        <div class="func-icon">⚡</div>
+                        <h4>Operativos de Impacto</h4>
+                        <p>Ejecución de operativos de alto impacto y persecuciones.</p>
+                    </div>
+                    <div class="func-card reveal">
+                        <div class="func-icon">🚨</div>
+                        <h4>Respuesta Inmediata</h4>
+                        <p>Atención a códigos de emergencia y llamados ciudadanos.</p>
+                    </div>
+                    <div class="func-card reveal">
+                        <div class="func-icon">🛣️</div>
+                        <h4>Control de Carreteras</h4>
+                        <p>Vigilancia y control de carreteras estatales.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Proceso de Ingreso -->
+        <section id="requisitos" class="section-process">
+            <div class="container">
+                <div class="section-tag reveal">RECLUTAMIENTO</div>
+                <h2 class="section-title reveal">⚖️ Proceso de Oposición</h2>
+                <p class="section-lead reveal">Para garantizar que contamos con "lo mejor de lo mejor", todos los
+                    aspirantes deben cumplir rigurosamente con el siguiente proceso:</p>
+
+                <div class="timeline">
+                    <div class="timeline-line"></div>
+                    <div class="timeline-item reveal">
+                        <div class="timeline-dot"><span>1</span></div>
+                        <div class="timeline-content">
+                            <h4>Lectura de Requisitos y Normativas</h4>
+                            <p>El primer paso es leer detalladamente los requisitos de ingreso, las normativas internas y el Manual SSPC. Asegúrate de cumplir con todo antes de avanzar.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item reveal">
+                        <div class="timeline-dot"><span>2</span></div>
+                        <div class="timeline-content">
+                            <h4>Examen Práctico (Formulario Bot)</h4>
+                            <p>Dirígete al canal de formularios en Discord y contesta todas las preguntas requeridas a través del bot automatizado. Responde con seriedad.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item reveal">
+                        <div class="timeline-dot"><span>3</span></div>
+                        <div class="timeline-content">
+                            <h4>Resultados y Asignación</h4>
+                            <p>Espera la publicación de resultados. Si eres aceptado, un Alto Mando te asignará automáticamente tu nueva placa, tu contrato y tu nuevo rol (no debes pedirlo en el chat general).</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item reveal">
+                        <div class="timeline-dot"><span>4</span></div>
+                        <div class="timeline-content">
+                            <h4>Semana de Prueba (Filtro Final)</h4>
+                            <p>Entrarás en un periodo de prueba de 1 semana. Deberás ser un oficial ejemplar: completar tus <strong>5 horas semanales</strong> de servicio y tener <strong>0 advertencias</strong>. Cualquier incumplimiento de la normativa o reglamento general causará baja definitiva inmediata.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="warning-banner reveal">
+                    <div class="warning-icon">⚠️</div>
+                    <div class="warning-text">
+                        <strong>ADVERTENCIA:</strong> El incumplimiento de la cadena de mando o saltarse pasos del
+                        proceso resultará en una <strong>lista negra (Blacklist)</strong> inmediata.
+                    </div>
+                </div>
+
+                <div class="motto-block reveal">
+                    <span class="motto-quote">"Servir y Proteger con Honor"</span>
+                    <span class="motto-flag">🇲🇽</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-glow"></div>
+        <div class="container">
+            <img src="https://images.seeklogo.com/logo-png/62/1/secretaria-de-seguridad-y-proteccion-ciudadana-logo-png_seeklogo-626112.png"
+                alt="SSPC" class="footer-logo">
+            <p class="footer-motto">Secretaría de Seguridad Pública y Ciudadana — MazatlanRP</p>
+            <div class="footer-bar">
+                <div class="bar-green"></div>
+                <div class="bar-white"></div>
+                <div class="bar-red"></div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/static/script.js"></script>
+</body>
+
+</html>

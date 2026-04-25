@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+discord.py
+jinja2
+supabase
+python-dotenv
+httpx
+python-multipart

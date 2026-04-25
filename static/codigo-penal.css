@@ -1,0 +1,249 @@
+/* ═══════════════════════════════════════════════
+   CÓDIGO PENAL — DEDICATED STYLESHEET
+   ═══════════════════════════════════════════════ */
+
+/* ── Penal Hero ── */
+.penal-hero {
+    position: relative;
+    padding: 160px 0 60px;
+    background: var(--bg-base);
+    text-align: center;
+    overflow: hidden;
+}
+
+.penal-hero-bg {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 100%;
+    background: radial-gradient(ellipse at 50% 0%, rgba(206,17,38,0.08) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.penal-hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.8rem);
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 16px;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.1));
+}
+
+.penal-hero-sub {
+    color: var(--text-secondary);
+    font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+    max-width: 620px;
+    margin: 0 auto 32px;
+    line-height: 1.8;
+}
+
+/* ── Search Wrapper ── */
+.search-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 100px;
+    padding: 4px 8px 4px 20px;
+    transition: all 0.4s var(--ease);
+}
+
+.search-bar:focus-within {
+    border-color: var(--gold);
+    box-shadow: 0 0 30px var(--gold-glow);
+}
+
+.search-icon {
+    opacity: 0.5;
+}
+
+.search-bar input {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--text-primary);
+    padding: 12px 0;
+    font-size: 0.95rem;
+}
+
+.search-clear {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 50%;
+    display: none;
+}
+
+.search-clear.visible { display: block; }
+
+.search-results {
+    margin-top: 14px;
+    font-size: 0.85rem;
+    color: var(--gold);
+    min-height: 20px;
+}
+
+/* ── Penal Body ── */
+.penal-body {
+    background: var(--bg-elevated);
+    padding: 40px 0 100px;
+}
+
+.penal-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 40px;
+}
+
+.penal-section {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 32px;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 16px;
+}
+
+.section-icon {
+    font-size: 1.8rem;
+}
+
+.section-header h2 {
+    color: var(--white);
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* ── Articles List ── */
+.articles-list {
+    display: grid;
+    grid-template-columns: repeat(Auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.article-item {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: all 0.35s var(--ease);
+}
+
+.article-item:hover {
+    background: rgba(255,255,255,0.04);
+    border-color: rgba(201,168,76,0.3);
+    transform: translateY(-3px);
+}
+
+.art-num {
+    background: var(--gold);
+    color: var(--black);
+    width: fit-content;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-weight: 800;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+.article-item p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.article-item h4 {
+    color: var(--white);
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.art-penalty {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid var(--glass-border);
+}
+
+.art-penalty span {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.art-penalty strong {
+    color: var(--gold);
+}
+
+.penalty-tag {
+    display: inline-block;
+    width: fit-content;
+    background: rgba(201,168,76,0.1);
+    color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.25);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-top: 4px;
+}
+
+.penalty-tag.red {
+    background: rgba(206,17,38,0.1);
+    color: #ff5555;
+    border-color: rgba(206,17,38,0.3);
+}
+
+/* ── Penal Footer ── */
+.penal-footer {
+    text-align: center;
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 1px solid var(--glass-border);
+}
+
+.penal-footer p {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+}
+
+.credits {
+    font-weight: 700;
+    color: var(--gold) !important;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .articles-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .penal-section {
+        padding: 24px 20px;
+    }
+    
+    .penal-hero-title {
+        font-size: 2.2rem;
+    }
+}

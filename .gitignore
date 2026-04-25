@@ -1,0 +1,13 @@
+# Entorno
+.env
+__pycache__/
+*.pyc
+.local/
+
+# IDEs
+.vscode/
+.idea/
+
+# Sistema
+.DS_Store
+Thumbs.db

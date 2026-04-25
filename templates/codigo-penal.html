@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Código Penal | Mazatlán RP — SSPC Sinaloa</title>
+    <meta name="description" content="Código Penal oficial del estado de Sinaloa para Mazatlán RP. Consulta leyes, multas y tiempos de condena.">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/codigo-penal.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Mexican Flag Bar -->
+    <div class="mexico-bar" aria-hidden="true">
+        <div class="bar-green"></div>
+        <div class="bar-white"></div>
+        <div class="bar-red"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar scrolled" id="main-navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="https://images.seeklogo.com/logo-png/62/1/secretaria-de-seguridad-y-proteccion-ciudadana-logo-png_seeklogo-626112.png" alt="Logo SSPC Sinaloa" id="logo-img">
+            </a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="normativa.html">Normativa</a></li>
+                <li><a href="manual.html">Manual SSPC</a></li>
+                <li><a href="codigo-penal.html" class="active">Código Penal</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="btn-ingresar" id="btn-login">Ingresar</button>
+                <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+    <div class="mobile-menu" id="mobile-menu">
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="normativa.html">Normativa</a></li>
+            <li><a href="manual.html">Manual SSPC</a></li>
+            <li><a href="codigo-penal.html">Código Penal</a></li>
+            <li><a href="#" class="mobile-login">Ingresar al Sistema</a></li>
+        </ul>
+    </div>
+
+    <main>
+        <!-- Page Header -->
+        <section class="penal-hero">
+            <div class="penal-hero-bg"></div>
+            <div class="container">
+                <div class="section-tag reveal">REGLAMENTO ESTATAL</div>
+                <h1 class="penal-hero-title reveal">📕 Código Penal</h1>
+                <p class="penal-hero-sub reveal">Mazatlán Roleplay — Marco jurídico vigente para la convivencia y seguridad ciudadana.</p>
+
+                <!-- Search -->
+                <div class="search-wrapper reveal">
+                    <div class="search-bar">
+                        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                        <input type="text" id="penal-search" placeholder="Busca un artículo o delito (ej. Homicidio, Art. 10)..." autocomplete="off">
+                        <button class="search-clear" id="search-clear" aria-label="Limpiar">✕</button>
+                    </div>
+                    <p class="search-results" id="search-results"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Penal Code Content -->
+        <section class="penal-body">
+            <div class="container">
+                
+                <div class="penal-grid" id="penal-content">
+                    
+                    <!-- Disposiciones Generales -->
+                    <div class="penal-section reveal">
+                        <div class="section-header">
+                            <span class="section-icon">📌</span>
+                            <h2>Disposiciones Generales</h2>
+                        </div>
+                        <div class="articles-list">
+                            <div class="article-item" data-search="Art. 1 regula conductas delictivas Mazatlán RP">
+                                <span class="art-num">Art. 1</span>
+                                <p>Este código regula las conductas delictivas dentro de Mazatlán RP.</p>
+                            </div>
+                            <div class="article-item" data-search="Art. 2 persona responsable actos rol">
+                                <span class="art-num">Art. 2</span>
+                                <p>Toda persona es responsable de sus actos dentro del rol.</p>
+                            </div>
+                            <div class="article-item" data-search="Art. 3 ignorancia ley no exime cumplimiento">
+                                <span class="art-num">Art. 3</span>
+                                <p>La ignorancia de la ley no exime de su cumplimiento.</p>
+                            </div>
+                            <div class="article-item" data-search="Art. 4 sanciones acumularse gravedad">
+                                <span class="art-num">Art. 4</span>
+                                <p>Las sanciones pueden acumularse según la gravedad.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Orden Público -->
+                    <div class="penal-section reveal">
+                        <div class="section-header">
+                            <span class="section-icon">🚨</span>
+                            <h2>Delitos Contra el Orden Público</h2>
+                        </div>
+                        <div class="articles-list">
+                            <div class="article-item delict" data-search="Art. 10 Alteración del orden público multa cárcel">
+                                <div class="art-main">
+                                    <span class="art-num">Art. 10</span>
+                                    <h4>Alteración del orden público</h4>
+                                </div>
+                                <div class="art-penalty">
+                                    <span><strong>Multa:</strong> $2,000 – $4,000</span>
+                                    <span><strong>Cárcel:</strong> 5 – 10 min</span>
+                                </div>
+                            </div>
+                            <div class="article-item delict" data-search="Art. 11 Resistencia a la autoridad multa cárcel">
+                                <div class="art-main">
+                                    <span class="art-num">Art. 11</span>
+                                    <h4>Resistencia a la autoridad</h4>
+                                </div>
+                                <div class="art-penalty">
+                                    <span><strong>Multa:</strong> $5,000</span>
+                                    <span><strong>Cárcel:</strong> 10 – 15 min</span>
+                                </div>
+                            </div>
+                            <div class="article-item delict" data-search="Art. 12 Fuga policial multa cárcel retiro licencia">
+                                <div class="art-main">
+                                    <span class="art-num">Art. 12</span>
+                                    <h4>Fuga policial</h4>
+                                </div>
+                                <div class="art-penalty">
+                                    <span><strong>Multa:</strong> $8,000</span>
+                                    <span><strong>Cárcel:</strong> 20 min</span>
+                                    <span class="penalty-tag red">Retiro de licencia</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Seguridad -->
+                    <div class="penal-section reveal">
+                        <div class="section-header">
+                            <span class="section-icon">🔫</span>
+                            <h2>Delitos Contra la Seguridad</h2>
+                        </div>
+                        <div class="articles-list">
+                            <div class="article-item delict" data-search="Art. 20 Portación ilegal de arma multa cárcel decomiso">
+                                <div class="art-main">
+                                    <span class="art-num">Art. 20</span>
+                                    <h4>Portación ilegal de arma</h4>
+                                </div>
+                                <div class="art-penalty">
+                                    <span><strong>Multa:</strong> $10,000</span>
+                                    <span><strong>Cárcel:</strong> 25 min</span>
+                                    <span class="penalty-tag">Decomiso del arma</span>
+                                </div>
+                            </div>
+                            <div class="article-item delict" data-search="Art. 21 Uso indebido de arma de fuego multa cárcel">
+                                <div class="art-main">
+                                    <span class="art-num">Art. 21</span>
+                                    <h4>Uso indebido de arma de fuego</h4>
+                                </div>
+                                <div class="art-penalty">
+                                    <span><strong>Multa:</strong> $15,000</span>
+                                    <span><strong>Cárcel:</strong> 30 min</span>
+                                </div>
+                            </div>
+                            <div class="article-item delict" data-search="Art. 22 Disparos injustificados multa cárcel">
+                                <div class="art-main">
+                                    <span class="art-num">Art. 22</span>
+                                    <h4>Disparos injustificados</h4>
+                                </div>
+                                <div class="art-penalty">
+                                    <span><strong>Multa:</strong> $12,000</span>
+                                    <span><strong>Cárcel:</strong> 25 min</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tránsito -->
+                    <div class="penal-section reveal">
+                        <div class="section-header">
+                            <span class="section-icon">🚗</span>
+                            <h2>Delitos de Tránsito</h2>
+                        </div>
+                        <div class="articles-list">
+                            <div class="article-item delict" data-search="Art. 30 Exceso de velocidad multa">
+                                <div class="art-main">
+                                    <span class="art-num">Art. 30</span>
+                                    <h4>Exceso de velocidad</h4>
+                                </div>
+                                <div class="art-penalty">
+                                    <span><strong>Multa:</strong> $2,500</span>
+                                </div>
+                            </div>
+                            <div class="article-item delict" data-search="Art. 31 Conducción temeraria multa cárcel">
+                                <div class="art-main">
+                                    <span class="art-num">Art. 31</span>
+                                    <h4>Conducción temeraria</h4>
+                                </div>
+                                <div class="art-penalty">
+                                    <span><strong>Multa:</strong> $5,000</span>
+                                    <span><strong>Cárcel:</strong> 5 min</span>
+                                </div>
+                            </div>
+                            <div class="article-item delict" data-search="Art. 32 Atropellamiento imprudencial multa cárcel">
+                                <div class="art-main">
+                                    <span class="art-num">Art. 32</span>
+                                    <h4>Atropellamiento imprudencial</h4>
+                                </div>
+                                <div class="art-penalty">
+                                    <span><strong>Multa:</strong> $8,000</span>
+                                    <span><strong>Cárcel:</strong> 15 min</span>
+                                </div>
+                            </div>
+                            <div class="article-item delict" data-search="Art. 33 Conducir sin licencia multa retención vehículo">
+                                <div class="art-main">
+                                    <span class="art-num">Art. 33</span>
+                                    <h4>Conducir sin licencia</h4>
+                                </div>
+                                <div class="art-penalty">
+                                    <span><strong>Multa:</strong> $4,000</span>
+                                    <span class="penalty-tag">Retención del vehículo</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Personas -->
+                    <div class="penal-section reveal">
+                        <div class="section-header">
+                            <span class="section-icon">🧍</span>
+                            <h2>Delitos Contra las Personas</h2>
+                        </div>
+                        <div class="articles-list">
+                            <div class="article-item delict" data-search="Art. 40 Amenazas multa cárcel">
+                                <div class="art-main">
+                                    <span class="art-num">Art. 40</span>
+                                    <h4>Amenazas</h4>
+                                </div>
+                                <div class="art-penalty">
+                                    <span><strong>Multa:</strong> $6,000</span>
+                                    <span><strong>Cárcel:</strong> 10 min</span>
+                                </div>
+                            </div>
+                            <div class="article-item delict" data-search="Art. 41 Lesiones leves multa cárcel">
+                                <div class="art-main">
+                                    <span class="art-num">Art. 41</span>
+                                    <h4>Lesiones leves</h4>
+                                </div>
+                                <div class="art-penalty">
+                                    <span><strong>Multa:</strong> $7,000</span>
+                                    <span><strong>Cárcel:</strong> 15 min</span>
+                                </div>
+                            </div>
+                            <div class="article-item delict" data-search="Art. 42 Lesiones graves multa cárcel">
+                                <div class="art-main">
+                                    <span class="art-num">Art. 42</span>
+                                    <h4>Lesiones graves</h4>
+                                </div>
+                                <div class="art-penalty">
+                                    <span><strong>Multa:</strong> $12,000</span>
+                                    <span><strong>Cárcel:</strong> 30 min</span>
+                                </div>
+                            </div>
+                            <div class="article-item delict" data-search="Art. 43 Homicidio cárcel cadena perpetua">
+                                <div class="art-main">
+                                    <span class="art-num">Art. 43</span>
+                                    <h4>Homicidio</h4>
+                                </div>
+                                <div class="art-penalty">
+                                    <span><strong>Cárcel:</strong> 60 min o más</span>
+                                    <span class="penalty-tag red">Cadena perpetua RP (Staff)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Propiedad -->
+                    <div class="penal-section reveal">
+                        <div class="section-header">
+                            <span class="section-icon">🏪</span>
+                            <h2>Delitos Contra la Propiedad</h2>
+                        </div>
+                        <div class="articles-list">
+                            <div class="article-item delict" data-search="Art. 50 Robo menor multa cárcel">
+                                <div class="art-main">
+                                    <span class="art-num">Art. 50</span>
+                                    <h4>Robo menor</h4>
+                                </div>
+                                <div class="art-penalty">
+                                    <span><strong>Multa:</strong> $5,000</span>
+                                    <span><strong>Cárcel:</strong> 10 min</span>
+                                </div>
+                            </div>
+                            <div class="article-item delict" data-search="Art. 51 Robo a comercio multa cárcel">
+                                <div class="art-main">
+                                    <span class="art-num">Art. 51</span>
+                                    <h4>Robo a comercio</h4>
+                                </div>
+                                <div class="art-penalty">
+                                    <span><strong>Multa:</strong> $12,000</span>
+                                    <span><strong>Cárcel:</strong> 30 min</span>
+                                </div>
+                            </div>
+                            <div class="article-item delict" data-search="Art. 52 Robo de vehículo multa cárcel">
+                                <div class="art-main">
+                                    <span class="art-num">Art. 52</span>
+                                    <h4>Robo de vehículo</h4>
+                                </div>
+                                <div class="art-penalty">
+                                    <span><strong>Multa:</strong> $15,000</span>
+                                    <span><strong>Cárcel:</strong> 35 min</span>
+                                </div>
+                            </div>
+                            <div class="article-item delict" data-search="Art. 53 Daños a propiedad privada multa">
+                                <div class="art-main">
+                                    <span class="art-num">Art. 53</span>
+                                    <h4>Daños a propiedad privada</h4>
+                                </div>
+                                <div class="art-penalty">
+                                    <span><strong>Multa:</strong> $6,000</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Drogas -->
+                    <div class="penal-section reveal">
+                        <div class="section-header">
+                            <span class="section-icon">💊</span>
+                            <h2>Delitos Relacionados con Drogas</h2>
+                        </div>
+                        <div class="articles-list">
+                            <div class="article-item delict" data-search="Art. 60 Posesión de drogas multa cárcel">
+                                <div class="art-main">
+                                    <span class="art-num">Art. 60</span>
+                                    <h4>Posesión de drogas</h4>
+                                </div>
+                                <div class="art-penalty">
+                                    <span><strong>Multa:</strong> $8,000</span>
+                                    <span><strong>Cárcel:</strong> 20 min</span>
+                                </div>
+                            </div>
+                            <div class="article-item delict" data-search="Art. 61 Venta de drogas multa cárcel">
+                                <div class="art-main">
+                                    <span class="art-num">Art. 61</span>
+                                    <h4>Venta de drogas</h4>
+                                </div>
+                                <div class="art-penalty">
+                                    <span><strong>Multa:</strong> $20,000</span>
+                                    <span><strong>Cárcel:</strong> 45 min</span>
+                                </div>
+                            </div>
+                            <div class="article-item delict" data-search="Art. 62 Narcotráfico cárcel investigación">
+                                <div class="art-main">
+                                    <span class="art-num">Art. 62</span>
+                                    <h4>Narcotráfico</h4>
+                                </div>
+                                <div class="art-penalty">
+                                    <span><strong>Cárcel:</strong> 60 min</span>
+                                    <span class="penalty-tag">Investigación RP</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Autoridad -->
+                    <div class="penal-section reveal">
+                        <div class="section-header">
+                            <span class="section-icon">🧑⚖️</span>
+                            <h2>Delitos Contra la Autoridad</h2>
+                        </div>
+                        <div class="articles-list">
+                            <div class="article-item delict" data-search="Art. 70 Suplantación de autoridad multa cárcel">
+                                <div class="art-main">
+                                    <span class="art-num">Art. 70</span>
+                                    <h4>Suplantación de autoridad</h4>
+                                </div>
+                                <div class="art-penalty">
+                                    <span><strong>Multa:</strong> $10,000</span>
+                                    <span><strong>Cárcel:</strong> 30 min</span>
+                                </div>
+                            </div>
+                            <div class="article-item delict" data-search="Art. 71 Corrupción cárcel">
+                                <div class="art-main">
+                                    <span class="art-num">Art. 71</span>
+                                    <h4>Corrupción</h4>
+                                </div>
+                                <div class="art-penalty">
+                                    <span><strong>Cárcel:</strong> 40 min</span>
+                                </div>
+                            </div>
+                            <div class="article-item delict" data-search="Art. 72 Obstrucción de justicia multa cárcel">
+                                <div class="art-main">
+                                    <span class="art-num">Art. 72</span>
+                                    <h4>Obstrucción de justicia</h4>
+                                </div>
+                                <div class="art-penalty">
+                                    <span><strong>Multa:</strong> $7,000</span>
+                                    <span><strong>Cárcel:</strong> 20 min</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Finales -->
+                    <div class="penal-section reveal">
+                        <div class="section-header">
+                            <span class="section-icon">⚖️</span>
+                            <h2>Disposiciones Finales</h2>
+                        </div>
+                        <div class="articles-list">
+                            <div class="article-item" data-search="Art. 80 staff agravar reducir penas rol">
+                                <span class="art-num">Art. 80</span>
+                                <p>El staff puede agravar o reducir penas según el rol.</p>
+                            </div>
+                            <div class="article-item" data-search="Art. 81 abusos sancionados administración">
+                                <span class="art-num">Art. 81</span>
+                                <p>Abusos serán sancionados por administración.</p>
+                            </div>
+                            <div class="article-item" data-search="Art. 82 actualización código previo aviso">
+                                <span class="art-num">Art. 82</span>
+                                <p>Este código puede actualizarse sin previo aviso.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="penal-footer reveal">
+                    <p>Contenido Exclusivo de Mazatlán RP</p>
+                    <p class="credits">Echo Por Antonio Luna</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-glow"></div>
+        <div class="container">
+            <img src="https://images.seeklogo.com/logo-png/62/1/secretaria-de-seguridad-y-proteccion-ciudadana-logo-png_seeklogo-626112.png" alt="SSPC" class="footer-logo">
+            <p class="footer-motto">Secretaría de Seguridad Pública y Ciudadana — MazatlanRP</p>
+            <div class="footer-bar">
+                <div class="bar-green"></div>
+                <div class="bar-white"></div>
+                <div class="bar-red"></div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/static/script.js"></script>
+    <script>
+        // Local Search for Penal Code
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('penal-search');
+            const searchResults = document.getElementById('search-results');
+            const searchClear = document.getElementById('search-clear');
+            const articles = document.querySelectorAll('.article-item');
+            const sections = document.querySelectorAll('.penal-section');
+
+            if (searchInput) {
+                searchInput.addEventListener('input', () => {
+                    const query = searchInput.value.toLowerCase().trim();
+                    searchClear.classList.toggle('visible', query.length > 0);
+                    
+                    if (query.length < 2) {
+                        articles.forEach(art => art.style.display = 'flex');
+                        sections.forEach(sec => sec.style.display = 'block');
+                        searchResults.textContent = '';
+                        return;
+                    }
+
+                    let matchCount = 0;
+
+                    sections.forEach(section => {
+                        let sectionHasMatch = false;
+                        const sectionArticles = section.querySelectorAll('.article-item');
+                        
+                        sectionArticles.forEach(art => {
+                            const searchText = art.getAttribute('data-search').toLowerCase();
+                            if (searchText.includes(query)) {
+                                art.style.display = 'flex';
+                                sectionHasMatch = true;
+                                matchCount++;
+                            } else {
+                                art.style.display = 'none';
+                            }
+                        });
+
+                        section.style.display = sectionHasMatch ? 'block' : 'none';
+                    });
+
+                    if (matchCount > 0) {
+                        searchResults.textContent = `${matchCount} resultado${matchCount !== 1 ? 's' : ''} encontrado${matchCount !== 1 ? 's' : ''}`;
+                    } else {
+                        searchResults.textContent = 'No se encontraron artículos que coincidan.';
+                    }
+                });
+
+                searchClear.addEventListener('click', () => {
+                    searchInput.value = '';
+                    searchClear.classList.remove('visible');
+                    articles.forEach(art => art.style.display = 'flex');
+                    sections.forEach(sec => sec.style.display = 'block');
+                    searchResults.textContent = '';
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

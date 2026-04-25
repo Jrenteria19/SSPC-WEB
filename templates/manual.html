@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual SSPC — Secretaría de Seguridad Pública de Sinaloa</title>
+    <meta name="description" content="Manual oficial de la SSPC Sinaloa: requisitos de ingreso, comunicaciones radiales, protocolos de detención y derechos del detenido.">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/manual.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Mexican Flag Bar -->
+    <div class="mexico-bar" aria-hidden="true">
+        <div class="bar-green"></div>
+        <div class="bar-white"></div>
+        <div class="bar-red"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar scrolled" id="main-navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="https://images.seeklogo.com/logo-png/62/1/secretaria-de-seguridad-y-proteccion-ciudadana-logo-png_seeklogo-626112.png" alt="Logo SSPC Sinaloa" id="logo-img">
+            </a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="normativa.html">Normativa</a></li>
+                <li><a href="manual.html" class="active">Manual SSPC</a></li>
+                <li><a href="codigo-penal.html">Código Penal</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="btn-ingresar" id="btn-login">Ingresar</button>
+                <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+    <div class="mobile-menu" id="mobile-menu">
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="normativa.html">Normativa</a></li>
+            <li><a href="manual.html">Manual SSPC</a></li>
+            <li><a href="codigo-penal.html">Código Penal</a></li>
+            <li><a href="#" class="mobile-login">Ingresar al Sistema</a></li>
+        </ul>
+    </div>
+
+    <main>
+        <!-- Page Header -->
+        <section class="manual-hero">
+            <div class="manual-hero-bg"></div>
+            <div class="container">
+                <div class="section-tag reveal">DOCUMENTO OFICIAL</div>
+                <h1 class="manual-hero-title reveal">Manual Operativo SSPC</h1>
+                <p class="manual-hero-sub reveal">Guía integral para el personal de la Secretaría de Seguridad Pública y Ciudadana de Sinaloa en ER:LC</p>
+
+                <!-- Search -->
+                <div class="search-bar reveal">
+                    <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    <input type="text" id="manual-search" placeholder="Buscar en el manual..." autocomplete="off">
+                    <button class="search-clear" id="search-clear" aria-label="Limpiar">✕</button>
+                </div>
+                <p class="search-results" id="search-results"></p>
+
+                <!-- Module Tabs -->
+                <div class="module-tabs reveal">
+                    <button class="mod-tab active" data-module="requisitos">📋 Requisitos</button>
+                    <button class="mod-tab" data-module="comunicaciones">📻 Comunicaciones</button>
+                    <button class="mod-tab" data-module="procedimientos">🚔 Procedimientos</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Manual Body -->
+        <div class="manual-body">
+            <div class="container">
+
+                <!-- ══════════════════════════════
+                     MODULE 1: REQUISITOS
+                     ══════════════════════════════ -->
+                <div class="module active" id="mod-requisitos">
+                    <div class="module-intro">
+                        <h2 class="module-title">🦅 Requisitos de Ingreso</h2>
+                        <p class="module-desc">"Formando la élite para la seguridad de Mazatlán" — Para aspirar a una vacante dentro de la institución, el candidato debe cumplir <strong>sin excepción</strong> con todos los puntos.</p>
+                    </div>
+
+                    <div class="req-grid">
+                        <!-- Card 1 -->
+                        <div class="req-card">
+                            <div class="req-card-icon">📑</div>
+                            <h3>Conocimientos y Normativa</h3>
+                            <ul class="req-list">
+                                <li>
+                                    <span class="req-dot"></span>
+                                    <div><strong>Dominio de Reglamentos</strong> — Conocer las Normativas Generales de Mazatlán RP y el Reglamento Interno de la SSPC. Se aplicará examen.</div>
+                                </li>
+                                <li>
+                                    <span class="req-dot"></span>
+                                    <div><strong>Manual de Procedimientos</strong> — Conocimiento de códigos de radio, claves 10-4 y protocolos de detención.</div>
+                                </li>
+                                <li>
+                                    <span class="req-dot"></span>
+                                    <div><strong>Nivel de Roleplay</strong> — Poseer conocimientos de Serious RP, evitando Fail RP, Powergaming o Metagaming.</div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Card 2 -->
+                        <div class="req-card">
+                            <div class="req-card-icon">🎙️</div>
+                            <h3>Técnicos y Personales</h3>
+                            <ul class="req-list">
+                                <li>
+                                    <span class="req-dot"></span>
+                                    <div><strong>Edad Mínima</strong> — 13 años y demostrar madurez conductual.</div>
+                                </li>
+                                <li>
+                                    <span class="req-dot"></span>
+                                    <div><strong>Comunicación</strong> — Micrófono funcional y claro obligatorio.</div>
+                                </li>
+                                <li>
+                                    <span class="req-dot"></span>
+                                    <div><strong>Disponibilidad</strong> — Mínimo 5 horas a la semana para patrullajes y operativos.</div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Card 3 -->
+                        <div class="req-card">
+                            <div class="req-card-icon">📂</div>
+                            <h3>Expediente y Legalidad</h3>
+                            <ul class="req-list">
+                                <li>
+                                    <span class="req-dot"></span>
+                                    <div><strong>Historial Limpio</strong> — Sin sanciones vigentes (Warns o Bans) en el servidor.</div>
+                                </li>
+                                <li>
+                                    <span class="req-dot"></span>
+                                    <div><strong>Documentación</strong> — Licencia de Conducir vigente (obligatoria) y Licencia de Armas (deseable).</div>
+                                </li>
+                                <li>
+                                    <span class="req-dot"></span>
+                                    <div><strong>Antecedentes</strong> — Sin antecedentes penales ni multas de tránsito vigentes.</div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Card 4 -->
+                        <div class="req-card">
+                            <div class="req-card-icon">➕</div>
+                            <h3>Requisitos Exclusivos</h3>
+                            <ul class="req-list">
+                                <li>
+                                    <span class="req-dot"></span>
+                                    <div><strong>Prueba de Manejo</strong> — Aprobar evaluación de conducción técnica y persecución urbana.</div>
+                                </li>
+                                <li>
+                                    <span class="req-dot"></span>
+                                    <div><strong>Salud Mental y Disciplina</strong> — Mantener la calma bajo presión y respeto absoluto a la Cadena de Mando.</div>
+                                </li>
+                                <li>
+                                    <span class="req-dot"></span>
+                                    <div><strong>Residencia Operativa</strong> — Discord vinculado con Roblox en el sistema del servidor.</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Warning -->
+                    <div class="alert-banner alert-red">
+                        <div class="alert-icon">⚠️</div>
+                        <div><strong>ADVERTENCIA:</strong> Mentir en cualquier punto resultará en una <strong>Blacklist permanente</strong> de la institución sin posibilidad de reingreso.</div>
+                    </div>
+                </div>
+
+
+                <!-- ══════════════════════════════
+                     MODULE 2: COMUNICACIONES
+                     ══════════════════════════════ -->
+                <div class="module" id="mod-comunicaciones">
+                    <div class="module-intro">
+                        <h2 class="module-title">📻 Manual de Comunicaciones Radiales</h2>
+                        <p class="module-desc">Códigos de uso exclusivo en el chat de radio del juego y canales de voz operativos. El conocimiento de estos códigos es <strong>obligatorio para todos los oficiales</strong>.</p>
+                    </div>
+
+                    <!-- Emergency Codes -->
+                    <h3 class="subsection-title">🚨 Claves de Emergencia</h3>
+                    <div class="code-cards">
+                        <div class="code-card code-green">
+                            <div class="code-badge">CÓD. 1</div>
+                            <h4>Rutina</h4>
+                            <p>Patrullaje normal.</p>
+                        </div>
+                        <div class="code-card code-yellow">
+                            <div class="code-badge">CÓD. 2</div>
+                            <h4>Urgencia</h4>
+                            <p>Sin sirenas, luces encendidas, respuesta rápida.</p>
+                        </div>
+                        <div class="code-card code-red">
+                            <div class="code-badge">CÓD. 3</div>
+                            <h4>Emergencia Total</h4>
+                            <p>Sirenas y luces, prioridad de paso absoluta.</p>
+                        </div>
+                        <div class="code-card code-blue">
+                            <div class="code-badge">CÓD. 4</div>
+                            <h4>Bajo Control</h4>
+                            <p>Situación controlada. No se requiere más apoyo.</p>
+                        </div>
+                        <div class="code-card code-red">
+                            <div class="code-badge">CÓD. 5</div>
+                            <h4>Zona de Peligro</h4>
+                            <p>Posible emboscada. Proceder con extrema precaución.</p>
+                        </div>
+                        <div class="code-card code-black">
+                            <div class="code-badge">CÓD. 0</div>
+                            <h4>¡Oficial Caído!</h4>
+                            <p>Emergencia máxima. Todas las unidades responden.</p>
+                        </div>
+                    </div>
+
+                    <!-- 10-Codes -->
+                    <h3 class="subsection-title">🔢 Códigos 10</h3>
+                    <div class="codes-table-wrapper">
+                        <table class="codes-table">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Significado</th>
+                                    <th>Ejemplo en chat</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><span class="code-tag">10-4</span></td><td>Recibido / Afirmativo</td><td class="code-example">10-4</td></tr>
+                                <tr><td><span class="code-tag">10-6</span></td><td>Ocupado — No disponible</td><td class="code-example">10-6 en escena</td></tr>
+                                <tr><td><span class="code-tag">10-7</span></td><td>Fuera de servicio</td><td class="code-example">10-7, nos vemos</td></tr>
+                                <tr><td><span class="code-tag">10-8</span></td><td>En servicio — Disponible</td><td class="code-example">10-8 disponible</td></tr>
+                                <tr><td><span class="code-tag">10-9</span></td><td>Repetir último mensaje</td><td class="code-example">10-9?</td></tr>
+                                <tr><td><span class="code-tag">10-10</span></td><td>Pelea en curso / Disturbio</td><td class="code-example">10-10 en Plaza</td></tr>
+                                <tr><td><span class="code-tag">10-20</span></td><td>Ubicación actual</td><td class="code-example">Mi 10-20: Hospital</td></tr>
+                                <tr><td><span class="code-tag">10-22</span></td><td>Cancelar última orden</td><td class="code-example">10-22, falsa alarma</td></tr>
+                                <tr class="row-critical"><td><span class="code-tag code-tag-red">10-33</span></td><td>¡Apoyo inmediato!</td><td class="code-example">10-33! TIROTEO!</td></tr>
+                                <tr><td><span class="code-tag">10-42</span></td><td>Accidente de tráfico</td><td class="code-example">10-42 en carretera</td></tr>
+                                <tr><td><span class="code-tag">10-80</span></td><td>Iniciando persecución</td><td class="code-example">10-80 Sedán Negro</td></tr>
+                                <tr><td><span class="code-tag">10-90</span></td><td>Robo en proceso / Alarma</td><td class="code-example">10-90 Banco Central</td></tr>
+                                <tr><td><span class="code-tag">10-97</span></td><td>Llegando al lugar</td><td class="code-example">10-97 al reporte</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Quick Tips -->
+                    <h3 class="subsection-title">💡 Combinaciones Rápidas para Chat</h3>
+                    <div class="tip-grid">
+                        <div class="tip-item">
+                            <div class="tip-label">Reportar posición</div>
+                            <div class="tip-command">10-8 | Mi 10-20: Comandancia.</div>
+                        </div>
+                        <div class="tip-item">
+                            <div class="tip-label">Pedir apoyo en persecución</div>
+                            <div class="tip-command">10-80 | 10-20: Puente Norte | 10-33!</div>
+                        </div>
+                        <div class="tip-item">
+                            <div class="tip-label">Confirmar llegada</div>
+                            <div class="tip-command">10-97 en el 10-90. Código 4.</div>
+                        </div>
+                    </div>
+
+                    <div class="alert-banner alert-gold">
+                        <div class="alert-icon">📱</div>
+                        <div><strong>Excepción de Memorización:</strong> Se permite tener una guía rápida a la vista mientras patrullas para agilizar el aprendizaje. Lo importante es no romper el rol por no saber comunicarse.</div>
+                    </div>
+                </div>
+
+
+                <!-- ══════════════════════════════
+                     MODULE 3: PROCEDIMIENTOS
+                     ══════════════════════════════ -->
+                <div class="module" id="mod-procedimientos">
+                    <div class="module-intro">
+                        <h2 class="module-title">🚔 Protocolos Operativos</h2>
+                        <p class="module-desc">Guía de actuación para garantizar la legalidad de cada intervención. Usa <code>/me</code> y <code>/do</code> cuando la mecánica del juego no permita realizar la acción directamente.</p>
+                    </div>
+
+                    <!-- Detention Steps -->
+                    <h3 class="subsection-title">Protocolo de Detención — 4 Pasos</h3>
+                    <div class="steps-flow">
+                        <div class="step-flow-item">
+                            <div class="step-flow-num">01</div>
+                            <div class="step-flow-content">
+                                <h4>Intervención y Aviso</h4>
+                                <div class="step-split">
+                                    <div class="step-split-col">
+                                        <div class="step-split-label">🔒 Si es Arresto</div>
+                                        <p>Esposar al individuo de inmediato. Identificarse y notificar el motivo.</p>
+                                        <div class="rp-command">"Soy oficial de la SSPC, queda detenido por [Delito]."</div>
+                                    </div>
+                                    <div class="step-split-col">
+                                        <div class="step-split-label">📝 Si es Multa</div>
+                                        <p>Sin esposas. Parada de tráfico, civil en el vehículo. Solo pide que baje si sospechas algo ilícito.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-flow-item">
+                            <div class="step-flow-num">02</div>
+                            <div class="step-flow-content">
+                                <h4>Registro y Aseguramiento (Cacheo)</h4>
+                                <div class="rp-command">/me realiza un cacheo superficial buscando objetos ilícitos.</div>
+                                <div class="rp-command">/do ¿Qué encontraría el oficial entre sus pertenencias?</div>
+                                <p>Si encuentras armas o drogas, rólealas como retiradas al <strong>maletero de la patrulla</strong> como evidencia.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-flow-item">
+                            <div class="step-flow-num">03</div>
+                            <div class="step-flow-content">
+                                <h4>Lectura de Derechos (Miranda) y Traslado</h4>
+                                <p>Leer los derechos en zona segura. Determinar destino según el delito:</p>
+                                <div class="destination-grid">
+                                    <div class="dest-card dest-minor">
+                                        <div class="dest-icon">🏢</div>
+                                        <div class="dest-label">Delitos Menores</div>
+                                        <div class="dest-place">Comisaría Local</div>
+                                        <div class="dest-desc">Multas altas, desobediencia, robos menores</div>
+                                    </div>
+                                    <div class="dest-card dest-major">
+                                        <div class="dest-icon">🏛️</div>
+                                        <div class="dest-label">Delitos Mayores</div>
+                                        <div class="dest-place">Penitenciaría</div>
+                                        <div class="dest-desc">Homicidio, narcotráfico, asalto armado</div>
+                                    </div>
+                                </div>
+                                <div class="alert-banner alert-red" style="margin-top:16px">
+                                    <div class="alert-icon">🚫</div>
+                                    <div><strong>Jamás</strong> ingreses a alguien a una celda sin haberle leído sus derechos previamente.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-flow-item">
+                            <div class="step-flow-num">04</div>
+                            <div class="step-flow-content">
+                                <h4>Comunicación y Dudas</h4>
+                                <p>Si el rol no es por voz, usa el <strong>chat de Roblox</strong> con propiedad. En voz, mantén comunicación <strong>clara y fluida</strong>. Si tienes dudas sobre el cargo a aplicar, <strong>pregunta a tu superior por radio antes de procesar</strong>.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Miranda Rights -->
+                    <h3 class="subsection-title">⚖️ Derechos del Detenido (Miranda)</h3>
+                    <div class="miranda-layout">
+                        <div class="miranda-full">
+                            <div class="miranda-header">📜 Lectura Completa — Rol de Voz</div>
+                            <div class="miranda-body">
+                                <p class="miranda-opening">"Usted se encuentra bajo arresto por los siguientes cargos <strong>[Mencionar delitos]</strong>. A partir de este momento tiene los siguientes derechos:"</p>
+                                <ol class="miranda-rights-list">
+                                    <li>Tiene derecho a <strong>guardar silencio</strong>. Cualquier cosa que diga puede y será usada en su contra ante un juez.</li>
+                                    <li>Tiene derecho a recibir <strong>asistencia médica inmediata</strong> en caso de ser necesario.</li>
+                                    <li>Tiene derecho a una <strong>llamada telefónica</strong> para comunicarse con un familiar o abogado.</li>
+                                    <li>Tiene derecho a ser tratado con <strong>respeto a su integridad</strong> física y moral.</li>
+                                </ol>
+                                <p class="miranda-question">¿Comprende los derechos que le he leído?"</p>
+                            </div>
+                        </div>
+                        <div class="miranda-short-block">
+                            <div class="miranda-header">⚡ Versión Corta — Chat de Roblox</div>
+                            <div class="miranda-body">
+                                <div class="rp-command" style="font-size:0.92rem; line-height:1.8">Usted está bajo arresto. Tiene derecho a: Guardar silencio | Un abogado | Una llamada | Asistencia médica. ¿Entiende sus derechos?</div>
+                                <div class="miranda-tips">
+                                    <div class="mtip"><span class="mtip-icon">✅</span><div><strong>Confirmación:</strong> Espera respuesta "Sí" o "No". Si no responde, repítelos una vez más.</div></div>
+                                    <div class="mtip"><span class="mtip-icon">🛡️</span><div><strong>Resistencia:</strong> Si el detenido es agresivo, súbelo a la unidad y léeselos al cerrar la puerta, antes de arrancar.</div></div>
+                                    <div class="mtip"><span class="mtip-icon">📹</span><div><strong>Registro:</strong> Activa la Bodycam durante la lectura como evidencia del cumplimiento del protocolo.</div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Use of Force -->
+                    <h3 class="subsection-title">📉 Niveles del Uso de la Fuerza</h3>
+                    <p class="subsection-desc">El oficial debe escalar su respuesta según el comportamiento del ciudadano. <strong>No se permite el uso de fuerza letal de inmediato.</strong></p>
+                    <div class="force-levels">
+                        <div class="force-item level-0">
+                            <div class="force-num">0</div>
+                            <div class="force-info">
+                                <div class="force-state">Presencia Policial</div>
+                                <div class="force-action">El oficial patrulla en el área. Su sola presencia debe disuadir.</div>
+                            </div>
+                            <div class="force-bar" style="width:5%"></div>
+                        </div>
+                        <div class="force-item level-1">
+                            <div class="force-num">1</div>
+                            <div class="force-info">
+                                <div class="force-state">Civil Cooperativo</div>
+                                <div class="force-action">Comunicación verbal clara y profesional. Sin contacto físico.</div>
+                            </div>
+                            <div class="force-bar" style="width:20%"></div>
+                        </div>
+                        <div class="force-item level-2">
+                            <div class="force-num">2</div>
+                            <div class="force-info">
+                                <div class="force-state">Resistencia Pasiva</div>
+                                <div class="force-action">El civil no obedece pero no es violento. Órdenes verbales firmes y repetidas.</div>
+                            </div>
+                            <div class="force-bar" style="width:40%"></div>
+                        </div>
+                        <div class="force-item level-3">
+                            <div class="force-num">3</div>
+                            <div class="force-info">
+                                <div class="force-state">Resistencia Activa</div>
+                                <div class="force-action">El civil intenta escapar o forcejea. Uso de fuerza física y esposas.</div>
+                            </div>
+                            <div class="force-bar" style="width:60%"></div>
+                        </div>
+                        <div class="force-item level-4">
+                            <div class="force-num">4</div>
+                            <div class="force-info">
+                                <div class="force-state">Agresión No Letal</div>
+                                <div class="force-action">El civil ataca con golpes u objetos. Uso de Taser o macana para inmovilizar.</div>
+                            </div>
+                            <div class="force-bar" style="width:80%"></div>
+                        </div>
+                        <div class="force-item level-5">
+                            <div class="force-num">5</div>
+                            <div class="force-info">
+                                <div class="force-state">Fuerza Letal Autorizada</div>
+                                <div class="force-action">El civil porta arma de fuego o pone en riesgo vidas. Uso de arma reglamentaria autorizado.</div>
+                            </div>
+                            <div class="force-bar" style="width:100%"></div>
+                        </div>
+                    </div>
+
+                    <!-- RP Commands -->
+                    <div class="rp-commands-box">
+                        <h4>💡 Comandos de Roleplay</h4>
+                        <div class="rp-cmd-grid">
+                            <div>
+                                <div class="rp-cmd-label"><code>/me</code> — Acciones del personaje</div>
+                                <div class="rp-command">/me le ajusta las esposas con fuerza.</div>
+                            </div>
+                            <div>
+                                <div class="rp-cmd-label"><code>/do</code> — Describir entorno o preguntar estados</div>
+                                <div class="rp-command">/do ¿El civil presenta heridas visibles?</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-glow"></div>
+        <div class="container">
+            <img src="https://images.seeklogo.com/logo-png/62/1/secretaria-de-seguridad-y-proteccion-ciudadana-logo-png_seeklogo-626112.png" alt="SSPC" class="footer-logo">
+            <p class="footer-motto">Secretaría de Seguridad Pública y Ciudadana — MazatlanRP</p>
+            <div class="footer-bar">
+                <div class="bar-green"></div>
+                <div class="bar-white"></div>
+                <div class="bar-red"></div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/static/script.js"></script>
+</body>
+
+</html>
