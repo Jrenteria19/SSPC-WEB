@@ -50,6 +50,6 @@ async def startup_event():
     asyncio.create_task(run_bot())
 
 if __name__ == "__main__":
-    # OptikLink (Pterodactyl) usa puertos dinámicos. Leemos el puerto asignado automáticamente.
-    port = int(os.getenv("SERVER_PORT", 8000))
+    # Northflank/Heroku/Render usan la variable 'PORT'. OptikLink usa 'SERVER_PORT'.
+    port = int(os.getenv("PORT", os.getenv("SERVER_PORT", 8000)))
     uvicorn.run("main:app", host="0.0.0.0", port=port)
