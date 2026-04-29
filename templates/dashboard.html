@@ -83,7 +83,7 @@
                         <a href="#" class="side-link" onclick="openModal('modal-busqueda')">
                             <span class="s-icon">🔍</span> Base de Datos
                         </a>
-                        <a href="#" class="side-link">
+                        <a href="#" class="side-link" onclick="openModal('modal-equipamiento')">
                             <span class="s-icon">🛡️</span> Equipamiento
                         </a>
 
@@ -238,9 +238,14 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Razón / Código Penal</label>
-                            <input type="text" id="arr-razon" list="lista-penal" placeholder="Buscar delito..."
-                                required>
+                            <label>Delitos Cometidos (Código Penal)</label>
+                            <div style="display: flex; gap: 10px; margin-bottom: 5px;">
+                                <input type="text" id="arr-razon-search" list="lista-penal" placeholder="Buscar y añadir delito..." style="flex: 1;">
+                                <button type="button" onclick="addArticleToArresto()" style="background: var(--gold); color: black; border: none; padding: 0 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">Añadir</button>
+                            </div>
+                            <div id="arr-selected-articles" style="display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px;">
+                                <!-- Aquí aparecerán los delitos añadidos -->
+                            </div>
                             <datalist id="lista-penal">
                                 <option value="Art. 10: Alteración del orden público">
                                 <option value="Art. 11: Resistencia a la autoridad">
@@ -269,9 +274,15 @@
                             </datalist>
                         </div>
 
-                        <div class="form-group">
-                            <label>Monto de Multa ($)</label>
-                            <input type="number" id="arr-multa" placeholder="Ej: 5000" required>
+                        <div style="display: flex; gap: 15px;">
+                            <div class="form-group" style="flex: 1;">
+                                <label>Monto Total Multa ($)</label>
+                                <input type="number" id="arr-multa" value="0" required>
+                            </div>
+                            <div class="form-group" style="flex: 1;">
+                                <label>Tiempo Total Cárcel (min)</label>
+                                <input type="number" id="arr-carcel" value="0" required>
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -311,9 +322,14 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Infracción (Código Penal)</label>
-                            <input type="text" id="mul-razon" list="lista-penal-full" placeholder="Buscar artículo..."
-                                required>
+                            <label>Infracciones Cometidas (Código Penal)</label>
+                            <div style="display: flex; gap: 10px; margin-bottom: 5px;">
+                                <input type="text" id="mul-razon-search" list="lista-penal-full" placeholder="Buscar y añadir infracción..." style="flex: 1;">
+                                <button type="button" onclick="addArticleToMulta()" style="background: var(--gold); color: black; border: none; padding: 0 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">Añadir</button>
+                            </div>
+                            <div id="mul-selected-articles" style="display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px;">
+                                <!-- Aquí aparecerán los delitos añadidos -->
+                            </div>
                             <datalist id="lista-penal-full">
                                 <option value="Art. 10: Alteración del orden público">
                                 <option value="Art. 11: Resistencia a la autoridad">
@@ -343,8 +359,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Monto de la Multa ($)</label>
-                            <input type="number" id="mul-monto" placeholder="Monto total" required>
+                            <label>Monto Total de la Multa ($)</label>
+                            <input type="number" id="mul-monto" value="0" required>
                         </div>
 
                         <div class="form-group">
@@ -384,6 +400,87 @@
                         <!-- Aquí se cargarán los resultados de SQLite -->
                         <p style="text-align: center; color: #888; padding: 20px;">Ingresa un nombre para buscar en la
                             base de datos...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal de Equipamiento (NUEVO) -->
+            <div id="modal-equipamiento" class="modal">
+                <div class="modal-content reveal" style="max-width: 900px;">
+                    <div class="modal-header">
+                        <h2>🛡️ Equipamiento Oficial SSPC</h2>
+                        <button class="close-btn" onclick="closeModal('modal-equipamiento')">&times;</button>
+                    </div>
+
+                    <div style="padding: 10px; max-height: 75vh; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--gold) rgba(255,255,255,0.05);">
+                        <p style="color: #ccc; margin-bottom: 20px;">Catálogo de unidades y uniformes autorizados para el personal de la Secretaría de Seguridad Pública y Ciudadana.</p>
+                        
+                        <h3 style="color: var(--gold); border-bottom: 1px solid rgba(255,215,0,0.3); padding-bottom: 5px; margin-bottom: 15px;">🚔 Unidades Operativas</h3>
+                        <div class="equip-grid">
+                            <div class="equip-card">
+                                <img src="/static/equipamiento/unidad_uno.png" alt="Unidad UNO" onerror="this.src='https://i.imgur.com/8NBa8pW.png'">
+                                <div class="equip-info">
+                                    <h4>Unidad de Operativos (UNO)</h4>
+                                    <p>Vehículo táctico blindado para misiones de alto impacto y despliegue rápido.</p>
+                                    <span class="equip-tag">ALTO IMPACTO</span>
+                                </div>
+                            </div>
+                            <div class="equip-card">
+                                <img src="/static/equipamiento/unidad_preventiva.png" alt="Unidad Preventiva" onerror="this.src='https://i.imgur.com/8NBa8pW.png'">
+                                <div class="equip-info">
+                                    <h4>Patrullajes Preventivos</h4>
+                                    <p>Unidad estándar para vigilancia ciudadana y respuesta a llamadas del 911.</p>
+                                    <span class="equip-tag">VIGILANCIA</span>
+                                </div>
+                            </div>
+                            <div class="equip-card">
+                                <img src="/static/equipamiento/unidad_retenes.png" alt="Unidad Retenes" onerror="this.src='https://i.imgur.com/8NBa8pW.png'">
+                                <div class="equip-info">
+                                    <h4>Retenes y Operativos</h4>
+                                    <p>Especializada para el establecimiento de puntos de control y revisión estatal.</p>
+                                    <span class="equip-tag">CONTROL</span>
+                                </div>
+                            </div>
+                            <div class="equip-card">
+                                <img src="/static/equipamiento/unidad_rapida.png" alt="Unidad Rápida" onerror="this.src='https://i.imgur.com/8NBa8pW.png'">
+                                <div class="equip-info">
+                                    <h4>Unidad Rápida</h4>
+                                    <p>Vehículo de alta velocidad diseñado para persecuciones y respuestas de emergencia.</p>
+                                    <span class="equip-tag">INTERCEPCIÓN</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p style="font-size: 11px; color: #888; margin-top: 10px; background: rgba(255,215,0,0.05); padding: 8px; border-radius: 5px; border-left: 3px solid var(--gold);">
+                            💡 <b>Nota:</b> Estas unidades pueden usarse en cualquier momento siempre que se apruebe el contexto o se pregunte a un superior inmediato.
+                        </p>
+
+                        <h3 style="color: var(--gold); border-bottom: 1px solid rgba(255,215,0,0.3); padding-bottom: 5px; margin: 25px 0 15px 0;">👔 Uniformes Autorizados</h3>
+                        <div class="equip-grid">
+                            <div class="equip-card">
+                                <img src="/static/equipamiento/uniforme_patrullaje.png" alt="Uniforme Patrullaje" onerror="this.src='https://i.imgur.com/8NBa8pW.png'">
+                                <div class="equip-info">
+                                    <h4>Patrullaje Normal</h4>
+                                    <p>Uniforme estándar reglamentario para labores de vigilancia diaria.</p>
+                                </div>
+                            </div>
+                            <div class="equip-card">
+                                <img src="/static/equipamiento/uniforme_investigacion.png" alt="Uniforme Investigación" onerror="this.src='https://i.imgur.com/8NBa8pW.png'">
+                                <div class="equip-info">
+                                    <h4>Investigación (SCPC)</h4>
+                                    <p>Vestimenta táctica especializada para labores de inteligencia y rastreo.</p>
+                                </div>
+                            </div>
+                            <div class="equip-card">
+                                <img src="/static/equipamiento/uniforme_uno.png" alt="Uniforme UNO" onerror="this.src='https://i.imgur.com/8NBa8pW.png'">
+                                <div class="equip-info">
+                                    <h4>Unidad UNO</h4>
+                                    <p>Equipamiento táctico pesado para operativos especiales de la unidad UNO.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p style="font-size: 11px; color: #888; margin-top: 10px; background: rgba(255,215,0,0.05); padding: 8px; border-radius: 5px; border-left: 3px solid var(--gold);">
+                            💡 <b>Seguridad:</b> Puedes portar el que desees, pero para más seguridad, pregunta a un superior inmediato.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -449,7 +546,20 @@
 
                 <!-- Panel de Estado de Servicio -->
                 <div class="service-panel reveal">
-                    <h3>📡 Control de Servicio</h3>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <h3>📡 Control de Servicio</h3>
+                        <div style="display: flex; gap: 20px; text-align: right;">
+                            <div class="stat-mini">
+                                <p style="font-size: 10px; color: #888; margin-bottom: 2px; font-weight: bold;">📊 TIEMPO SEMANAL</p>
+                                <b id="stat-weekly-time" style="color: var(--gold); font-size: 20px; font-family: 'Inter', sans-serif;">0h 0m</b>
+                            </div>
+                            <div class="stat-mini" id="stat-current-box" style="display: none; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 20px;">
+                                <p style="font-size: 10px; color: #888; margin-bottom: 2px; font-weight: bold;">⏱️ SESIÓN ACTUAL</p>
+                                <b id="stat-session-time" style="color: #2ecc71; font-size: 20px; font-family: 'Inter', sans-serif;">00:00:00</b>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="service-controls">
                         <button id="btn-duty" class="btn-service duty" onclick="updateService('duty')">
                             <span>🟢</span> Entrar en Servicio
@@ -579,6 +689,61 @@
             margin-bottom: 5px;
         }
 
+        .equip-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .equip-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .equip-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold);
+            box-shadow: 0 5px 15px rgba(201,168,76,0.2);
+        }
+
+        .equip-card img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .equip-info {
+            padding: 12px;
+        }
+
+        .equip-info h4 {
+            color: var(--gold);
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .equip-info p {
+            font-size: 11px;
+            color: #aaa;
+            line-height: 1.4;
+        }
+
+        .equip-tag {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 9px;
+            background: rgba(255,215,0,0.1);
+            color: var(--gold);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            border: 1px solid rgba(255,215,0,0.2);
+        }
+
         .citizen-name {
             font-size: 18px;
             font-weight: 800;
@@ -695,8 +860,13 @@
                 });
 
                 // Buscar Actividad Actual
-                sspc_db.from('actividad_oficiales').select('estado').eq('discord_name', session.username).single().then(({ data, error }) => {
+                sspc_db.from('actividad_oficiales').select('*').eq('discord_name', session.username).single().then(({ data, error }) => {
                     const estado = data ? data.estado : 'off';
+                    const tiempoSemanal = data ? data.tiempo_semanal : 0;
+                    const ultimoInicio = data ? data.ultimo_inicio : null;
+
+                    document.getElementById('stat-weekly-time').textContent = formatSecondsShort(tiempoSemanal);
+
                     const btnDuty = document.getElementById('btn-duty');
                     const btnPause = document.getElementById('btn-pause');
                     const btnOff = document.getElementById('btn-off');
@@ -705,6 +875,7 @@
                         btnDuty.classList.add('disabled'); btnDuty.disabled = true;
                         btnPause.classList.remove('disabled'); btnPause.disabled = false;
                         btnOff.classList.remove('disabled'); btnOff.disabled = false;
+                        if(ultimoInicio) startLiveTimer(ultimoInicio);
                     } else if (estado === 'pause') {
                         btnDuty.classList.remove('disabled'); btnDuty.disabled = false;
                         btnPause.classList.add('disabled'); btnPause.disabled = true;
@@ -893,6 +1064,36 @@
         });
 
         let allRecords = [];
+        let liveTimerInterval = null;
+
+        function formatSeconds(totalSeconds) {
+            const h = Math.floor(totalSeconds / 3600);
+            const m = Math.floor((totalSeconds % 3600) / 60);
+            const s = Math.floor(totalSeconds % 60);
+            return `${h}h ${m}m ${s}s`;
+        }
+
+        function formatSecondsShort(totalSeconds) {
+            const h = Math.floor(totalSeconds / 3600);
+            const m = Math.floor((totalSeconds % 3600) / 60);
+            return `${h}h ${m}m`;
+        }
+
+        function startLiveTimer(startTimeStr) {
+            if(liveTimerInterval) clearInterval(liveTimerInterval);
+            document.getElementById('stat-current-box').style.display = 'block';
+            const start = new Date(startTimeStr).getTime();
+            
+            liveTimerInterval = setInterval(() => {
+                const now = Date.now();
+                const diff = Math.floor((now - start) / 1000);
+                
+                const h = Math.floor(diff / 3600).toString().padStart(2, '0');
+                const m = Math.floor((diff % 3600) / 60).toString().padStart(2, '0');
+                const s = Math.floor(diff % 60).toString().padStart(2, '0');
+                document.getElementById('stat-session-time').textContent = `${h}:${m}:${s}`;
+            }, 1000);
+        }
 
         async function loadDatabase() {
             const resultsContainer = document.getElementById('db-results');
@@ -1069,13 +1270,116 @@
             }
         }
 
+        // --- DATOS DEL CÓDIGO PENAL (AUTOMATIZACIÓN) ---
+        const dataPenal = {
+            "Art. 10": { multa: 4000, carcel: 10, nota: "" },
+            "Art. 11": { multa: 5000, carcel: 15, nota: "" },
+            "Art. 12": { multa: 8000, carcel: 20, nota: "Retiro de licencia" },
+            "Art. 20": { multa: 10000, carcel: 25, nota: "Decomiso del arma" },
+            "Art. 21": { multa: 15000, carcel: 30, nota: "" },
+            "Art. 22": { multa: 12000, carcel: 25, nota: "" },
+            "Art. 30": { multa: 2500, carcel: 0, nota: "" },
+            "Art. 31": { multa: 5000, carcel: 5, nota: "" },
+            "Art. 32": { multa: 8000, carcel: 15, nota: "" },
+            "Art. 33": { multa: 4000, carcel: 0, nota: "Retención del vehículo" },
+            "Art. 40": { multa: 6000, carcel: 10, nota: "" },
+            "Art. 41": { multa: 7000, carcel: 15, nota: "" },
+            "Art. 42": { multa: 12000, carcel: 30, nota: "" },
+            "Art. 43": { multa: 0, carcel: 60, nota: "Homicidio (Cadena Perpetua Staff)" },
+            "Art. 50": { multa: 5000, carcel: 10, nota: "" },
+            "Art. 51": { multa: 12000, carcel: 30, nota: "" },
+            "Art. 52": { multa: 15000, carcel: 35, nota: "Retención vehículo" },
+            "Art. 53": { multa: 6000, carcel: 0, nota: "" },
+            "Art. 60": { multa: 8000, carcel: 20, nota: "Decomiso drogas" },
+            "Art. 61": { multa: 20000, carcel: 45, nota: "Decomiso drogas" },
+            "Art. 62": { multa: 0, carcel: 60, nota: "Investigación RP" },
+            "Art. 70": { multa: 10000, carcel: 30, nota: "" },
+            "Art. 71": { multa: 0, carcel: 40, nota: "" },
+            "Art. 72": { multa: 7000, carcel: 20, nota: "" }
+        };
+
+        let arrestoSelectedArticles = [];
+        let multaSelectedArticles = [];
+
+        function addArticleToArresto() {
+            const input = document.getElementById('arr-razon-search');
+            const val = input.value.trim();
+            if (!val) return;
+            arrestoSelectedArticles.push(val);
+            input.value = "";
+            renderArticles('arresto');
+            calculateTotals('arresto');
+        }
+
+        function addArticleToMulta() {
+            const input = document.getElementById('mul-razon-search');
+            const val = input.value.trim();
+            if (!val) return;
+            multaSelectedArticles.push(val);
+            input.value = "";
+            renderArticles('multa');
+            calculateTotals('multa');
+        }
+
+        function removeArticle(type, index) {
+            if (type === 'arresto') arrestoSelectedArticles.splice(index, 1);
+            else multaSelectedArticles.splice(index, 1);
+            renderArticles(type);
+            calculateTotals(type);
+        }
+
+        function renderArticles(type) {
+            const container = document.getElementById(type === 'arresto' ? 'arr-selected-articles' : 'mul-selected-articles');
+            const list = type === 'arresto' ? arrestoSelectedArticles : multaSelectedArticles;
+            container.innerHTML = list.map((art, i) => `
+                <span style="background: rgba(255,215,0,0.15); border: 1px solid var(--gold); padding: 4px 10px; border-radius: 6px; color: white; font-size: 12px; display: flex; align-items: center; gap: 8px;">
+                    ${art} <b onclick="removeArticle('${type}', ${i})" style="cursor: pointer; color: #ff4757; font-size: 16px;">&times;</b>
+                </span>
+            `).join('');
+        }
+
+        function calculateTotals(type) {
+            const list = type === 'arresto' ? arrestoSelectedArticles : multaSelectedArticles;
+            let totalM = 0;
+            let totalC = 0;
+            let totalN = [];
+
+            list.forEach(item => {
+                const match = item.match(/Art\.\s\d+/);
+                if (match && dataPenal[match[0]]) {
+                    const info = dataPenal[match[0]];
+                    totalM += info.multa;
+                    totalC += info.carcel;
+                    if (info.nota && !totalN.includes(info.nota)) totalN.push(info.nota);
+                }
+            });
+
+            if (type === 'arresto') {
+                document.getElementById('arr-multa').value = totalM;
+                document.getElementById('arr-carcel').value = totalC;
+                if (totalN.length > 0) {
+                    const current = document.getElementById('arr-notas').value;
+                    const newNotes = totalN.filter(n => !current.includes(n)).join(", ");
+                    if (newNotes) document.getElementById('arr-notas').value = (current ? current + ". " : "") + newNotes;
+                }
+            } else {
+                document.getElementById('mul-monto').value = totalM;
+                if (totalN.length > 0) {
+                    const current = document.getElementById('mul-notas').value;
+                    const newNotes = totalN.filter(n => !current.includes(n)).join(", ");
+                    if (newNotes) document.getElementById('mul-notas').value = (current ? current + ". " : "") + newNotes;
+                }
+            }
+        }
+
         async function submitMulta(event) {
             event.preventDefault();
             const WEBHOOK_MULTA = 'https://discord.com/api/webhooks/1496800133503909918/HLDxQAPiQwk6TAUmQFNB_wXXxyByBY-r2yr5fVB2kae8MCVmkZMBTve7dsIQa1DU1dAK';
 
+            if (multaSelectedArticles.length === 0) return alert("❌ Debes añadir al menos una infracción.");
+
             const roblox = document.getElementById('mul-roblox').value;
             const discord = document.getElementById('mul-discord').value;
-            const razon = document.getElementById('mul-razon').value;
             const monto = document.getElementById('mul-monto').value;
             const notas = document.getElementById('mul-notas').value;
             const link = document.getElementById('mul-link').value;
@@ -1084,24 +1388,25 @@
             const badge = document.getElementById('user-badge').textContent;
             const rank = document.getElementById('user-rank').textContent;
 
-            // Guardar en SQLite
+            const razonFinal = multaSelectedArticles.join(" | ");
+
             saveToDB({
-                tipo: 'multa', roblox, discord, razon, monto, notas, evidencia: link, oficial: session.username, placa: badge
+                tipo: 'multa', roblox, discord, razon: razonFinal, monto, notas, evidencia: link, oficial: session.username, placa: badge
             });
 
             const embed = {
                 title: "🎫 REPORTE DE MULTA - TRÁNSITO SSPC",
-                color: 15105570, // Naranja Tránsito
+                color: 15105570,
                 thumbnail: { url: "https://images.seeklogo.com/logo-png/62/1/secretaria-de-seguridad-y-proteccion-ciudadana-logo-png_seeklogo-626112.png" },
                 image: { url: link },
                 fields: [
                     { name: "👤 INFRACTOR", value: `**Roblox:** ${roblox}\n**Discord:** ${discord}`, inline: false },
-                    { name: "🚗 INFRACCIÓN", value: razon, inline: true },
-                    { name: "💰 MONTO", value: `$${monto}`, inline: true },
+                    { name: "🚗 INFRACCIONES", value: multaSelectedArticles.join("\n"), inline: false },
+                    { name: "💰 MONTO TOTAL", value: `$${monto}`, inline: true },
                     { name: "📝 DETALLES OPERATIVOS", value: notas },
                     { name: "👮 EMITIDO POR", value: `${session.username} [${badge}] - ${rank}` }
                 ],
-                footer: { text: "SSPC Mazatlán RP | Verificar con ✅" },
+                footer: { text: "SSPC Mazatlán RP | Sistema de Control" },
                 timestamp: new Date()
             };
 
@@ -1112,8 +1417,10 @@
                     body: JSON.stringify({ embeds: [embed] })
                 });
 
-                alert(`✅ MULTA REGISTRADA EXITOSAMENTE.\n\nEl reporte ha sido enviado al canal de tránsito y guardado en la base de datos.`);
+                alert(`✅ MULTA REGISTRADA EXITOSAMENTE.`);
+                multaSelectedArticles = [];
                 document.getElementById('form-multa').reset();
+                renderArticles('multa');
                 closeModal('modal-multa');
             } catch (err) {
                 alert("Error al enviar la multa: " + err.message);
@@ -1124,10 +1431,12 @@
             event.preventDefault();
             const WEBHOOK_ARRESTO = 'https://discord.com/api/webhooks/1496799859053826138/wGTAkB-BNeBjRdaTo7POR3Yq_btG_GMOKHoVGAxFN9Fh6_AYbORUY6M2BdrKsZqHEJin';
 
+            if (arrestoSelectedArticles.length === 0) return alert("❌ Debes añadir al menos un delito.");
+
             const roblox = document.getElementById('arr-roblox').value;
             const discord = document.getElementById('arr-discord').value;
-            const razon = document.getElementById('arr-razon').value;
             const multa = document.getElementById('arr-multa').value;
+            const carcel = document.getElementById('arr-carcel').value;
             const notas = document.getElementById('arr-notas').value;
             const link = document.getElementById('arr-link').value;
 
@@ -1135,24 +1444,26 @@
             const badge = document.getElementById('user-badge').textContent;
             const rank = document.getElementById('user-rank').textContent;
 
-            // Guardar en SQLite
+            const razonFinal = arrestoSelectedArticles.join(" | ");
+
             saveToDB({
-                tipo: 'arresto', roblox, discord, razon, monto: multa, notas, evidencia: link, oficial: session.username, placa: badge
+                tipo: 'arresto', roblox, discord, razon: razonFinal, monto: multa, notas, evidencia: link, oficial: session.username, placa: badge
             });
 
             const embed = {
                 title: "⚖️ FICHA DE ARRESTO - SSPC MAZATLAN",
-                color: 2061738, // Rojo Policial
+                color: 2061738,
                 thumbnail: { url: "https://images.seeklogo.com/logo-png/62/1/secretaria-de-seguridad-y-proteccion-ciudadana-logo-png_seeklogo-626112.png" },
                 image: { url: link },
                 fields: [
                     { name: "👤 DETENIDO", value: `**Roblox:** ${roblox}\n**Discord:** ${discord}`, inline: false },
-                    { name: "📖 DELITO (C.P)", value: razon, inline: true },
-                    { name: "💰 MULTA", value: `$${multa}`, inline: true },
+                    { name: "📖 DELITOS (C.P)", value: arrestoSelectedArticles.join("\n"), inline: false },
+                    { name: "💰 MULTA TOTAL", value: `$${multa}`, inline: true },
+                    { name: "⏳ TIEMPO CÁRCEL", value: `${carcel} min`, inline: true },
                     { name: "📝 ANOTACIONES", value: notas },
                     { name: "👮 ARRESTADO POR", value: `${session.username} [${badge}] - ${rank}` }
                 ],
-                footer: { text: "Verificar con ✅ | Si no se marca, la ficha no es válida." },
+                footer: { text: "SSPC Mazatlán RP | Sistema de Control" },
                 timestamp: new Date()
             };
 
@@ -1163,9 +1474,10 @@
                     body: JSON.stringify({ embeds: [embed] })
                 });
 
-                alert(`✅ FICHA DE ARRESTO PUBLICADA.\n\nEl reporte ha sido enviado y guardado en la base de datos.`);
-
+                alert(`✅ FICHA DE ARRESTO PUBLICADA.`);
+                arrestoSelectedArticles = [];
                 document.getElementById('form-arresto').reset();
+                renderArticles('arresto');
                 closeModal('modal-arresto');
             } catch (err) {
                 alert("Error al enviar la ficha: " + err.message);
@@ -1229,21 +1541,20 @@
                     await sspc_db.from('actividad_oficiales').update({ estado: 'duty', ultimo_inicio: ahoraUTC, message_id: messageId }).eq('discord_name', session.username);
                 }
                 alert("🟢 Servicio Iniciado exitosamente.");
+                startLiveTimer(ahoraUTC);
             }
             else if (status === 'pause') {
                 if (estadoActual !== 'duty') { alert("No puedes pausar si no estás en servicio."); return location.reload(); }
+                if(liveTimerInterval) clearInterval(liveTimerInterval);
 
                 const start = new Date(ultimoInicio).getTime();
                 const diffSeconds = Math.floor((Date.now() - start) / 1000);
                 tiempoAcumulado += diffSeconds;
 
-                let totalHours = Math.floor(tiempoAcumulado / 3600);
-                let totalMins = Math.floor((tiempoAcumulado % 3600) / 60);
-
                 if (messageId) {
                     const embed = {
                         title: "🟡 SERVICIO EN PAUSA - SSPC",
-                        description: `El oficial **${session.username}** está actualmente en una pausa operativa (10-7).\n\n⏱️ **Tiempo Semanal Acumulado:** ${totalHours} horas y ${totalMins} minutos.`,
+                        description: `El oficial **${session.username}** está actualmente en una pausa operativa (10-7).\n\n⏱️ **Tiempo Semanal Acumulado:** ${formatSecondsShort(tiempoAcumulado)}.`,
                         color: 16766720,
                         fields: [{ name: "👤 Oficial", value: `**Nombre:** ${session.username}\n**Placa:** ${badge}\n**Rango:** ${rank}`, inline: false }],
                         footer: { text: "Sistema de Actividad SSPC" },
@@ -1253,10 +1564,11 @@
                 }
 
                 await sspc_db.from('actividad_oficiales').update({ estado: 'pause', tiempo_semanal: tiempoAcumulado, ultimo_inicio: ahoraUTC }).eq('discord_name', session.username);
-                alert(`🟡 Servicio Pausado. Tiempo añadido a la base de datos.`);
+                alert(`🟡 Servicio Pausado.\n\n⏱️ Sesión actual: ${formatSeconds(diffSeconds)}\n📊 Total acumulado: ${formatSecondsShort(tiempoAcumulado)}`);
             }
             else if (status === 'off') {
                 if (estadoActual === 'off') { alert("Ya estás fuera de servicio."); return location.reload(); }
+                if(liveTimerInterval) clearInterval(liveTimerInterval);
 
                 let diffSeconds = 0;
                 if (estadoActual === 'duty') {
@@ -1265,13 +1577,10 @@
                     tiempoAcumulado += diffSeconds;
                 }
 
-                let totalHours = Math.floor(tiempoAcumulado / 3600);
-                let totalMins = Math.floor((tiempoAcumulado % 3600) / 60);
-
                 if (messageId) {
                     const embed = {
                         title: "🔴 FIN DE SERVICIO - SSPC",
-                        description: `El oficial **${session.username}** ha finalizado su patrullaje.\n\n⏱️ **Tiempo Semanal Total:** ${totalHours} horas y ${totalMins} minutos.\n*El mensaje de servicio ha sido cerrado permanentemente.*`,
+                        description: `El oficial **${session.username}** ha finalizado su patrullaje.\n\n⏱️ **Tiempo Semanal Total:** ${formatSecondsShort(tiempoAcumulado)}.\n*El mensaje de servicio ha sido cerrado permanentemente.*`,
                         color: 15158332,
                         fields: [{ name: "👤 Oficial", value: `**Nombre:** ${session.username}\n**Placa:** ${badge}\n**Rango:** ${rank}`, inline: false }],
                         footer: { text: "Sistema de Actividad SSPC" },
@@ -1281,7 +1590,11 @@
                 }
 
                 await sspc_db.from('actividad_oficiales').update({ estado: 'off', tiempo_semanal: tiempoAcumulado, message_id: null }).eq('discord_name', session.username);
-                alert(`🔴 Servicio Finalizado. Tienes un total acumulado de ${totalHours}h ${totalMins}m en la base de datos.`);
+                
+                let msgFin = `🔴 Servicio Finalizado.\n\n📊 Tiempo total acumulado esta semana: ${formatSecondsShort(tiempoAcumulado)}`;
+                if(diffSeconds > 0) msgFin = `🔴 Servicio Finalizado.\n\n⏱️ Última sesión: ${formatSeconds(diffSeconds)}\n${msgFin}`;
+                
+                alert(msgFin);
             }
 
             // Avisamos al backend Python para que mantenga el conteo actualizado
