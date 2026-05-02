@@ -175,14 +175,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ── Login Button (Discord OAuth2) ──
     const btnLogin = document.getElementById('btn-login');
+    const mobileLogins = document.querySelectorAll('.mobile-login');
+
+    const doLogin = (e) => {
+        if(e) e.preventDefault();
+        const CLIENT_ID = '1496760858599096440';
+        const REDIRECT_URI = window.location.origin + '/verificacion.html'; 
+        const oauth2Url = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify%20guilds%20guilds.members.read`;
+        window.location.href = oauth2Url;
+    };
+
     if (btnLogin) {
-        btnLogin.addEventListener('click', () => {
-            const CLIENT_ID = '1496760858599096440';
-            const REDIRECT_URI = window.location.origin + '/verificacion.html'; 
-            const oauth2Url = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&scope=identify%20guilds%20guilds.members.read`;
-            window.location.href = oauth2Url;
-        });
+        btnLogin.addEventListener('click', doLogin);
     }
+    
+    mobileLogins.forEach(btn => {
+        btn.addEventListener('click', doLogin);
+    });
 
     // ── Manual Module Tabs ──
     const modTabs = document.querySelectorAll('.mod-tab');

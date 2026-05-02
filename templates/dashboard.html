@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
+    <link rel="icon" type="image/webp" href="/static/logo.webp">
 </head>
 
 <body>
@@ -32,7 +33,7 @@
     <nav class="navbar scrolled" id="main-navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-logo">
-                <img src="https://images.seeklogo.com/logo-png/62/1/secretaria-de-seguridad-y-proteccion-ciudadana-logo-png_seeklogo-626112.png"
+                <img src="/static/logo.webp"
                     alt="Logo SSPC Sinaloa">
             </a>
             <ul class="nav-links" id="nav-links">
@@ -893,6 +894,9 @@
                 if (isAltoMando) {
                     document.getElementById('menu-altos-mandos').style.display = 'block';
                 }
+
+                // Cargar Anuncios Institucionales al inicio
+                loadAnuncios();
             }
         });
 
@@ -998,7 +1002,7 @@
                 ],
                 footer: {
                     text: `ID del Oficial: ${session.username} | SSPC - MAZATLAN RP`,
-                    icon_url: "https://images.seeklogo.com/logo-png/62/1/secretaria-de-seguridad-y-proteccion-ciudadana-logo-png_seeklogo-626112.png"
+                    icon_url: "/static/logo.webp"
                 },
                 timestamp: new Date()
             };
@@ -1397,7 +1401,7 @@
             const embed = {
                 title: "🎫 REPORTE DE MULTA - TRÁNSITO SSPC",
                 color: 15105570,
-                thumbnail: { url: "https://images.seeklogo.com/logo-png/62/1/secretaria-de-seguridad-y-proteccion-ciudadana-logo-png_seeklogo-626112.png" },
+                thumbnail: { url: "/static/logo.webp" },
                 image: { url: link },
                 fields: [
                     { name: "👤 INFRACTOR", value: `**Roblox:** ${roblox}\n**Discord:** ${discord}`, inline: false },
@@ -1453,7 +1457,7 @@
             const embed = {
                 title: "⚖️ FICHA DE ARRESTO - SSPC MAZATLAN",
                 color: 2061738,
-                thumbnail: { url: "https://images.seeklogo.com/logo-png/62/1/secretaria-de-seguridad-y-proteccion-ciudadana-logo-png_seeklogo-626112.png" },
+                thumbnail: { url: "/static/logo.webp" },
                 image: { url: link },
                 fields: [
                     { name: "👤 DETENIDO", value: `**Roblox:** ${roblox}\n**Discord:** ${discord}`, inline: false },
